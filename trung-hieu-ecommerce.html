@@ -1,0 +1,1487 @@
+﻿<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Trung Hiếu — Web TMĐT Mini hoàn chỉnh</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --brand:#2F5D43; --brand-dark:#224531; --accent:#C98A2B;
+  --paper:#F6F3EC; --paper2:#FAF7F2; --ink:#1C1C1A; --soft:#6E6D66;
+  --line:#E3DDCC; --white:#fff;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'Be Vietnam Pro',system-ui,-apple-system,'Segoe UI',sans-serif;background:var(--paper);color:var(--ink);line-height:1.6}
+a{color:inherit;text-decoration:none}
+
+/* ===== TOP NAV ===== */
+.topnav{position:sticky;top:0;z-index:50;display:flex;align-items:center;height:62px;padding:0 24px;
+  background:rgba(34,69,49,.97);backdrop-filter:blur(8px);color:#fff;box-shadow:0 2px 14px rgba(0,0,0,.18)}
+.brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:16px;letter-spacing:.2px;white-space:nowrap}
+.brand .dot{width:10px;height:10px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 3px rgba(201,138,43,.25)}
+.brand small{display:block;font-weight:500;font-size:10.5px;color:#B8C4B8;letter-spacing:.6px}
+.navlinks{display:flex;gap:4px;margin-left:28px;overflow-x:auto}
+.navlinks button{background:transparent;border:0;color:#D8E0D6;font:inherit;font-size:13.5px;font-weight:600;
+  padding:9px 14px;border-radius:8px;cursor:pointer;white-space:nowrap;transition:.18s}
+.navlinks button:hover{background:rgba(255,255,255,.08);color:#fff}
+.navlinks button.active{background:var(--accent);color:#fff}
+.navcta{margin-left:auto;display:flex;gap:8px;align-items:center}
+.navcta .pill{background:var(--accent);color:#fff;font-size:12.5px;font-weight:700;padding:8px 16px;border-radius:999px;cursor:pointer;border:0;font:inherit}
+@media(max-width:900px){.brand small{display:none}.navlinks{margin-left:10px}}
+
+/* ===== LAYOUT ===== */
+.frame{display:none;width:100%;height:calc(100vh - 62px);border:0;background:#fff}
+.frame.active{display:block}
+.section{display:none;padding:0 0 60px}
+.section.active{display:block}
+.wrap{max-width:1180px;margin:0 auto;padding:0 24px}
+
+/* ===== HERO ===== */
+.hero{background:linear-gradient(160deg,var(--brand-dark) 0%,var(--brand) 55%,#3A6E4E 100%);color:#fff;padding:72px 0 64px;position:relative;overflow:hidden}
+.hero::after{content:"";position:absolute;right:-120px;top:-120px;width:420px;height:420px;border-radius:50%;background:radial-gradient(circle,rgba(201,138,43,.35),transparent 70%)}
+.hero .wrap{position:relative;z-index:2}
+.eyebrow{display:inline-block;font-size:12px;font-weight:700;letter-spacing:2px;color:var(--accent);border:1px solid rgba(201,138,43,.5);padding:6px 14px;border-radius:999px;margin-bottom:22px}
+.hero h1{font-size:clamp(30px,4.6vw,52px);font-weight:800;line-height:1.15;max-width:820px}
+.hero h1 em{font-style:normal;color:#F0C572}
+.hero p.lead{margin-top:18px;font-size:17px;color:#D8E0D6;max-width:640px}
+.hero-cta{margin-top:32px;display:flex;gap:12px;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:13px 24px;border-radius:10px;font-weight:700;font-size:14.5px;cursor:pointer;border:0;font:inherit;transition:.18s}
+.btn-primary{background:var(--accent);color:#fff}.btn-primary:hover{background:#B57A20;transform:translateY(-1px)}
+.btn-ghost{background:rgba(255,255,255,.12);color:#fff;border:1px solid rgba(255,255,255,.3)}.btn-ghost:hover{background:rgba(255,255,255,.2)}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:48px}
+.stat{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-radius:14px;padding:20px 18px;backdrop-filter:blur(4px)}
+.stat b{display:block;font-size:30px;font-weight:800;color:#F0C572;line-height:1.1}
+.stat span{font-size:12.5px;color:#CFD8CF;margin-top:6px;display:block}
+@media(max-width:760px){.stats{grid-template-columns:repeat(2,1fr)}}
+
+/* ===== SECTIONS ===== */
+.block{padding:56px 0 8px}
+h2.sec{font-size:28px;font-weight:800;color:var(--brand-dark);display:flex;align-items:center;gap:12px}
+h2.sec::before{content:"";width:6px;height:28px;background:var(--accent);border-radius:3px}
+.sec-sub{color:var(--soft);margin:10px 0 30px;font-size:15px;max-width:720px}
+
+.modules{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:16px}
+.mod{background:var(--white);border:1px solid var(--line);border-radius:14px;padding:22px 20px;transition:.2s;position:relative;overflow:hidden}
+.mod:hover{transform:translateY(-3px);box-shadow:0 12px 28px rgba(47,93,67,.14);border-color:var(--brand)}
+.mod .num{position:absolute;top:14px;right:16px;font-size:34px;font-weight:800;color:rgba(47,93,67,.08)}
+.mod h3{font-size:15.5px;font-weight:700;color:var(--brand-dark);margin-bottom:8px;padding-right:30px}
+.mod p{font-size:12.8px;color:var(--soft);line-height:1.55}
+.mod .big-o{margin-top:12px;display:inline-block;font-size:11.5px;font-weight:700;color:var(--accent);background:#FBF3E2;padding:4px 10px;border-radius:6px}
+
+.highlights{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:8px}
+.hl{background:var(--brand-dark);color:#fff;border-radius:14px;padding:24px 22px;position:relative;overflow:hidden}
+.hl:nth-child(2){background:var(--brand)}
+.hl:nth-child(3){background:#3A6E4E}
+.hl b{font-size:30px;font-weight:800;color:#F0C572;display:block;line-height:1.1}
+.hl span{font-size:13px;color:#E3EBE2;margin-top:8px;display:block}
+@media(max-width:760px){.highlights{grid-template-columns:1fr}}
+
+.tech{display:flex;flex-wrap:wrap;gap:10px;margin-top:8px}
+.tech span{background:var(--white);border:1px solid var(--line);padding:8px 16px;border-radius:999px;font-size:13px;font-weight:600;color:var(--brand-dark)}
+
+/* ===== DOCS ===== */
+.docs-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
+.doc{background:var(--white);border:1px solid var(--line);border-radius:14px;padding:24px;display:flex;flex-direction:column;gap:10px}
+.doc .tag{font-size:11px;font-weight:700;letter-spacing:1px;color:var(--accent);text-transform:uppercase}
+.doc h3{font-size:17px;font-weight:700;color:var(--brand-dark)}
+.doc p{font-size:13px;color:var(--soft);flex:1}
+.doc .meta{font-size:12px;color:var(--soft);border-top:1px dashed var(--line);padding-top:10px}
+
+footer{background:var(--brand-dark);color:#B8C4B8;padding:34px 0;font-size:13px;text-align:center;margin-top:50px}
+footer b{color:#fff}
+
+/* ===== LOGIN MODAL (main page) ===== */
+.login-modal{position:fixed;inset:0;z-index:200;display:none;align-items:center;justify-content:center;padding:20px;background:rgba(20,30,25,.55);backdrop-filter:blur(4px)}
+.login-modal.open{display:flex}
+.login-card{background:#fff;border-radius:16px;width:min(400px,100%);padding:28px 28px 24px;box-shadow:0 30px 80px rgba(0,0,0,.3)}
+.login-card h3{font-size:20px;font-weight:800;color:var(--brand-dark);margin-bottom:4px}
+.login-card p.sub{font-size:13px;color:var(--soft);margin-bottom:18px}
+.login-card .field{margin-bottom:14px}
+.login-card .field label{display:block;font-size:12.5px;font-weight:600;margin-bottom:5px;color:var(--ink)}
+.login-card .field input{width:100%;padding:11px 13px;border:1px solid var(--line);border-radius:9px;outline:none;background:var(--paper2);font:inherit;font-size:14px}
+.login-card .field input:focus{border-color:var(--brand);background:#fff}
+.login-card .err{color:#B3402F;font-size:12.5px;margin:-6px 0 10px;min-height:16px;font-weight:600}
+.login-card .btn-login{width:100%;padding:12px;border-radius:10px;background:var(--brand);color:#fff;font-weight:700;font-size:14.5px;border:0;cursor:pointer;font:inherit;transition:.18s}
+.login-card .btn-login:hover{background:var(--brand-dark)}
+.login-card .hint{margin-top:14px;font-size:11.5px;color:var(--soft);background:var(--paper);border:1px dashed var(--line);border-radius:8px;padding:9px 12px;line-height:1.5}
+.navcta .user-pill{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.25);color:#fff;font-size:12.5px;font-weight:600;padding:8px 14px;border-radius:999px;cursor:pointer;font:inherit;display:flex;align-items:center;gap:6px}
+.navcta .user-pill:hover{background:rgba(255,255,255,.22)}
+</style>
+</head>
+<body>
+
+<!-- ============ TOP NAVIGATION ============ -->
+<nav class="topnav">
+  <div class="brand"><span class="dot"></span>
+    <div>TRUNG HIẾU · MINI CORE<small>CTDL &amp; GIẢI THUẬT · 2025–2026</small></div>
+  </div>
+  <div class="navlinks" id="navlinks">
+    <button data-go="home" class="active">Trang chủ</button>
+    <button data-go="store">Cửa hàng</button>
+    <button data-go="engine">Bộ máy CTDL</button>
+    <button data-go="dash">Dashboard</button>
+    <button data-go="docs">Tài liệu</button>
+  </div>
+  <div class="navcta"><button class="user-pill" id="loginBtnMain">👤 Đăng nhập</button><button class="pill" data-go="store">Mua ngay →</button></div>
+</nav>
+
+<!-- ============ LOGIN MODAL (main page) ============ -->
+<div class="login-modal" id="loginModalMain">
+  <div class="login-card">
+    <h3>Đăng nhập Trung Hiếu</h3>
+    <p class="sub">Vui lòng đăng nhập để mua sắm và thanh toán.</p>
+    <form id="loginFormMain" novalidate>
+      <div class="field"><label>Tên đăng nhập</label><input name="username" placeholder="trunghieu123" autocomplete="username"></div>
+      <div class="field"><label>Mật khẩu</label><input name="password" type="password" placeholder="•••••••••" autocomplete="current-password"></div>
+      <div class="err" id="loginErrMain"></div>
+      <button type="submit" class="btn-login">Đăng nhập</button>
+    </form>
+    <div class="hint">Tài khoản demo: <b>trunghieu123</b> / <b>123456789</b></div>
+  </div>
+</div>
+
+<!-- ============ SECTION: HOME ============ -->
+<section class="section active" id="sec-home">
+  <header class="hero">
+    <div class="wrap">
+      <span class="eyebrow">BÀI TẬP LỚN · MÔN CẤU TRÚC DỮ LIỆU &amp; GIẢI THUẬT</span>
+      <h1>Lõi Hệ thống <em>Thương mại Điện tử Mini</em><br>với 5 cấu trúc dữ liệu cốt lõi</h1>
+      <p class="lead">Quản lý 100.000 sản phẩm bằng LinkedList đôi, Stack Undo, Queue Flash Sale, BST + AVL, Hash Table &amp; Self-organizing List — chạy trên mã nguồn C++17 và minh họa trực quan bằng web.</p>
+      <div class="hero-cta">
+        <button class="btn btn-primary" data-go="store">🛒 Mua sắm ngay</button>
+        <button class="btn btn-ghost" data-go="engine">Xem bộ máy vận hành CTDL</button>
+        <button class="btn btn-ghost" data-go="dash">Bảng điều khiển Dashboard</button>
+      </div>
+      <div class="stats">
+        <div class="stat"><b>100.000+</b><span>Sản phẩm mô phỏng trong kho</span></div>
+        <div class="stat"><b>5</b><span>Module CTDL bắt buộc + điểm cộng AVL</span></div>
+        <div class="stat"><b>17</b><span>Chiều cao AVL khi chèn ID tăng dần (BST = 100.000)</span></div>
+        <div class="stat"><b>2,0 ms</b><span>QuickSort sắp xếp 10.000 phần tử (g++ -O2)</span></div>
+      </div>
+    </div>
+  </header>
+
+  <div class="wrap">
+    <div class="block">
+      <h2 class="sec">5 module kiến trúc</h2>
+      <p class="sec-sub">Mỗi module ứng một nghiệp vụ thực tế của sàn TMĐT và một nhóm cấu trúc dữ liệu / giải thuật tương ứng.</p>
+      <div class="modules">
+        <div class="mod"><span class="num">01</span><h3>Kho hàng động</h3><p>Danh sách liên kết đôi quản lý sản phẩm: thêm/xóa đầu-cuối, cấp phát động, hàm hủy giải phóng bộ nhớ.</p><span class="big-o">Thêm đầu/cuối O(1)</span></div>
+        <div class="mod"><span class="num">02</span><h3>Giỏ hàng &amp; Flash Sale</h3><p>Stack (LIFO) cho Undo xóa giỏ hàng; Queue (FIFO) xử lý hàng nghìn đơn Flash Sale theo thứ tự.</p><span class="big-o">Push/Pop/Enqueue O(1)</span></div>
+        <div class="mod"><span class="num">03</span><h3>Chỉ mục truy xuất</h3><p>BST khóa theo ID (chèn/xóa/duyệt đệ quy) + AVL cân bằng 4 phép xoay, khắc phục suy biến.</p><span class="big-o">Tìm kiếm O(log n)</span></div>
+        <div class="mod"><span class="num">04</span><h3>Lọc &amp; sắp xếp</h3><p>Selection / Bubble / Insertion O(n²) đối chiếu QuickSort &amp; MergeSort đệ quy O(n log n), đo thời gian thực tế.</p><span class="big-o">O(n²) vs O(n log n)</span></div>
+        <div class="mod"><span class="num">05</span><h3>Tìm kiếm tức thời</h3><p>Hash Table (băm đa thức trên tên, Separate Chaining) + Self-organizing List Move-to-Front theo lịch sử.</p><span class="big-o">Tìm trung bình O(1)</span></div>
+      </div>
+    </div>
+
+    <div class="block">
+      <h2 class="sec">Số liệu thực nghiệm đo thật</h2>
+      <p class="sec-sub">Benchmark trên Ubuntu, g++ 11.4 -O2, seed=2024 — tất cả thuật toán đều được kiểm tra kết quả đúng.</p>
+      <div class="highlights">
+        <div class="hl"><b>~4.800×</b><span>AVL nhanh hơn tìm tuyến tính (0,18ms vs 880ms cho 1.000 truy vấn / 100.000 SP)</span></div>
+        <div class="hl"><b>~0,3 ms</b><span>Queue xử lý 10.000 đơn Flash Sale FIFO — gần như tức thời</span></div>
+        <div class="hl"><b>0,500</b><span>Load factor Hash Table; 20.675 đụng độ, chuỗi dài nhất chỉ 6 — phân bố rất đều</span></div>
+      </div>
+    </div>
+
+    <div class="block">
+      <h2 class="sec">Công nghệ &amp; công cụ</h2>
+      <p class="sec-sub"></p>
+      <div class="tech">
+        <span>C++17 (con trỏ, struct/class, đệ quy)</span><span>g++ 11.4 -O2</span><span>Python (benchmark, biểu đồ matplotlib)</span>
+        <span>HTML / CSS / Vanilla JS</span><span>localStorage (giỏ hàng)</span><span>Be Vietnam Pro</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ IFRAMES (isolated apps) ============ -->
+<iframe class="frame" id="frame-store" title="Cửa hàng & Bộ máy CTDL"></iframe>
+<iframe class="frame" id="frame-dash" title="Dashboard CTDL"></iframe>
+
+<!-- ============ SECTION: DOCS ============ -->
+<section class="section" id="sec-docs">
+  <div class="wrap">
+    <div class="block">
+      <h2 class="sec">Tài liệu &amp; mã nguồn đính kèm</h2>
+      <p class="sec-sub">Bộ sản phẩm đầy đủ của bài tập lớn — file được nộp kèm theo (liên hệ nhóm để nhận).</p>
+      <div class="docs-grid">
+        <div class="doc"><span class="tag">Word · ~975 KB</span><h3>Báo cáo bài tập lớn (7 chương)</h3><p>Đúng mẫu: Times New Roman 13, giãn dòng 1.5, lề 2.5cm. Có bảng Big-O, số liệu thực nghiệm, 6 ảnh chụp + 2 biểu đồ, phụ lục mã nguồn, tài liệu tham khảo.</p><div class="meta">File: BaoCao_MiniEcommerce.docx</div></div>
+        <div class="doc"><span class="tag">PowerPoint · 15 trang</span><h3>Slide thuyết trình bảo vệ</h3><p>Bìa, nội dung, kiến trúc 5 module, thực nghiệm, bảng Big-O, demo terminal, biểu đồ đối chiếu, kịch bản kiểm thử, kết luận &amp; Q&amp;A.</p><div class="meta">File: ThuyetTrinh_MiniEcommerce.pptx</div></div>
+        <div class="doc"><span class="tag">C++17 · ~1000 dòng</span><h3>Mã nguồn lõi hệ thống</h3><p>Menu console 6 chức năng, đủ 5 module + AVL điểm cộng. Biên dịch: <code>g++ -std=c++17 -O2 MiniEcommerce.cpp -o MiniEcommerce</code>.</p><div class="meta">File: MiniEcommerce.cpp (đã biên dịch, đã chạy benchmark)</div></div>
+        <div class="doc"><span class="tag">Web · trang này</span><h3>Web TMĐT + Bộ máy CTDL</h3><p>Cửa hàng 12 sản phẩm, giỏ hàng lưu localStorage, Undo Stack, Queue FIFO, và tab Bộ máy vận hành trực quan 6 cấu trúc dữ liệu.</p><div class="meta">File: store-engine.html (đã tích hợp tại mục "Cửa hàng")</div></div>
+        <div class="doc"><span class="tag">Web · 6 tab</span><h3>Dashboard trực quan CTDL</h3><p>Minh họa từng module: LinkedList, Stack/Queue, BST/AVL, sắp xếp, Hash, kèm benchmark tương tác.</p><div class="meta">File: dashboard.html (đã tích hợp tại mục "Dashboard")</div></div>
+        <div class="doc"><span class="tag">ZIP · đầy đủ</span><h3>Gói nộp bài tổng hợp</h3><p>Chứa mã nguồn, binary Linux, báo cáo Word, slide PPT, 2 web, ảnh chụp, biểu đồ và README hướng dẫn.</p><div class="meta">File: MiniEcommerce_Project.zip</div></div>
+      </div>
+    </div>
+  </div>
+  <footer>
+    <div class="wrap"><b>Trung Hiếu — Mini E-Commerce Core Engine</b> — Bài tập lớn môn Cấu trúc Dữ liệu &amp; Giải thuật · Năm học 2025–2026<br>
+    Sinh viên tự xây dựng; AI chỉ hỗ trợ định dạng và minh họa. Không copy 100% — hãy hiểu mã nguồn trước khi nộp.</div>
+  </footer>
+</section>
+
+<!-- ============ APP SOURCES (inert text/plain templates) ============ -->
+<script type="text/plain" id="tpl-store"><!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Trung Hiếu — Web TMĐT chạy trên Bộ máy CTDL</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%232F5D43'/%3E%3Cpath d='M10 22V10h3.2l2.8 7 2.8-7H22v12h-2.6v-7.4l-3 7.4h-1.6l-3-7.4V22H10z' fill='%23FAF7F2'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#F6F3EC;--surface:#fff;--ink:#1C1C1A;--soft:#6E6D66;--line:#E5DFD2;--brand:#2F5D43;--deep:#224531;--accent:#C98A2B;--danger:#B3402F;--blue:#3A6EA5;--r:14px}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Be Vietnam Pro',system-ui,sans-serif;background:var(--bg);color:var(--ink);line-height:1.55;font-size:14.5px}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
+input,select{font-family:inherit;font-size:14px}
+a{color:inherit;text-decoration:none}
+.mono{font-variant-numeric:tabular-nums;font-family:Consolas,monospace}
+.wrap{max-width:1200px;margin:0 auto;padding:0 22px}
+.view{display:none}.view.active{display:block}
+
+/* Header */
+header{position:sticky;top:0;z-index:60;background:rgba(246,243,236,.94);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.nav{display:flex;align-items:center;gap:18px;height:66px}
+.logo{font-weight:800;letter-spacing:.12em;font-size:16px;display:flex;align-items:center;gap:9px;flex-shrink:0}
+.logo-mark{width:30px;height:30px;border-radius:8px;background:var(--brand);color:#F6F3EC;display:grid;place-items:center;font-size:13px;font-weight:800}
+.view-switch{display:flex;background:#EAE5D8;border-radius:999px;padding:4px;gap:2px;margin-left:10px}
+.view-switch button{padding:7px 16px;border-radius:999px;font-weight:600;font-size:13px;color:var(--soft);transition:.2s}
+.view-switch button.active{background:var(--ink);color:#fff}
+.nav-right{margin-left:auto;display:flex;align-items:center;gap:10px}
+.search{position:relative}
+.search input{width:200px;padding:9px 14px 9px 36px;border:1px solid var(--line);border-radius:999px;background:var(--surface);outline:none;transition:.2s}
+.search input:focus{border-color:var(--brand);width:240px}
+.search svg{position:absolute;left:12px;top:50%;transform:translateY(-50%);width:16px;height:16px;stroke:var(--soft)}
+.cart-btn{position:relative;width:42px;height:42px;border-radius:50%;border:1px solid var(--line);background:var(--surface);display:grid;place-items:center;transition:.2s}
+.cart-btn:hover{background:var(--brand);border-color:var(--brand)}
+.cart-btn:hover svg{stroke:#fff}
+.cart-btn svg{width:20px;height:20px;stroke:var(--ink);transition:.2s}
+.badge{position:absolute;top:-4px;right:-4px;min-width:19px;height:19px;padding:0 5px;border-radius:999px;background:var(--accent);color:#fff;font-size:11px;font-weight:700;display:grid;place-items:center;opacity:0;transform:scale(.5);transition:.2s}
+.badge.show{opacity:1;transform:scale(1)}
+
+/* Hero */
+.hero{padding:56px 0 36px;display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:center}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:11.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--brand);margin-bottom:14px}
+.eyebrow::before{content:"";width:26px;height:1.5px;background:var(--brand)}
+.hero h1{font-size:clamp(30px,4.2vw,46px);font-weight:800;line-height:1.12;letter-spacing:-.02em}
+.hero h1 em{font-style:normal;color:var(--brand)}
+.hero p{margin-top:14px;color:var(--soft);max-width:48ch}
+.hero-cta{margin-top:24px;display:flex;gap:12px;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;padding:12px 22px;border-radius:999px;font-weight:600;font-size:14px;transition:.15s}
+.btn:active{transform:scale(.97)}
+.btn-primary{background:var(--ink);color:#fff}.btn-primary:hover{background:var(--brand)}
+.btn-ghost{border:1.5px solid var(--ink);color:var(--ink)}.btn-ghost:hover{background:var(--ink);color:#fff}
+.btn-accent{background:var(--accent);color:#fff}.btn-accent:hover{background:#b0771f}
+.btn-block{width:100%}
+.hero-visual{position:relative;aspect-ratio:5/4;border-radius:22px;background:linear-gradient(140deg,#2F5D43,#1A3526);overflow:hidden;display:grid;place-items:center}
+.hero-visual::after{content:"";position:absolute;inset:0;background:radial-gradient(circle at 70% 20%,rgba(201,138,43,.4),transparent 55%)}
+.engine-badge{position:relative;z-index:2;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.25);backdrop-filter:blur(6px);border-radius:16px;padding:20px 24px;color:#fff;width:80%;max-width:340px}
+.engine-badge .tag{font-size:11px;letter-spacing:.14em;text-transform:uppercase;opacity:.8}
+.engine-badge .big{font-size:26px;font-weight:800;margin-top:6px}
+.engine-badge .row{display:flex;justify-content:space-between;margin-top:14px;font-size:13px;opacity:.9}
+.engine-badge .row b{color:#F3C96B}
+.chip{position:absolute;z-index:2;background:#fff;border-radius:12px;padding:9px 13px;box-shadow:0 8px 24px rgba(0,0,0,.18);font-size:12.5px;font-weight:600;display:flex;align-items:center;gap:7px}
+.chip svg{width:15px;height:15px;stroke:var(--brand)}
+.chip1{top:12%;left:-4%}.chip2{bottom:14%;right:-3%}
+
+/* Store section */
+.section{padding:30px 0 60px}
+.sec-head{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:20px}
+.sec-head h2{font-size:26px;font-weight:800}
+.sec-head p{color:var(--soft);font-size:13.5px;margin-top:3px}
+.toolbar{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.chipf{padding:7px 16px;border-radius:999px;border:1px solid var(--line);background:var(--surface);font-size:13.5px;font-weight:500;color:var(--soft);transition:.2s}
+.chipf:hover{border-color:var(--ink);color:var(--ink)}
+.chipf.active{background:var(--ink);color:#fff;border-color:var(--ink)}
+.toolbar select{padding:7px 12px;border-radius:999px;border:1px solid var(--line);background:var(--surface);font-size:13px}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;transition:.25s;display:flex;flex-direction:column}
+.card:hover{transform:translateY(-4px);box-shadow:0 12px 30px rgba(28,28,26,.1)}
+.card-media{aspect-ratio:1/1;position:relative;display:grid;place-items:center}
+.card-media svg.ic{width:44%;height:44%;stroke:rgba(255,255,255,.92);fill:none;stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round}
+.card-cat{position:absolute;top:10px;left:10px;background:rgba(255,255,255,.92);padding:3px 10px;border-radius:999px;font-size:10.5px;font-weight:700;letter-spacing:.04em}
+.card-stock{position:absolute;top:10px;right:10px;background:rgba(28,28,26,.75);color:#fff;padding:3px 9px;border-radius:999px;font-size:10.5px;font-weight:600}
+.card-body{padding:14px 14px 16px;display:flex;flex-direction:column;gap:5px;flex:1}
+.card-name{font-size:14px;font-weight:600;line-height:1.35}
+.card-meta{font-size:11.5px;color:var(--soft)}
+.card-price{font-size:17px;font-weight:800;color:var(--brand);margin-top:auto;padding-top:6px}
+.add-btn{margin-top:9px;width:100%;padding:9px;border-radius:9px;background:var(--bg);border:1px solid var(--line);font-weight:600;font-size:13px;display:flex;align-items:center;justify-content:center;gap:6px;transition:.2s}
+.add-btn:hover{background:var(--brand);border-color:var(--brand);color:#fff}
+.add-btn svg{width:15px;height:15px;stroke:currentColor}
+.empty{grid-column:1/-1;text-align:center;padding:50px;color:var(--soft)}
+
+/* Engine view */
+.eng-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;margin:18px 0 22px}
+.eng-card{background:linear-gradient(160deg,#fff,#F1EDE2);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+.eng-card .k{font-size:11.5px;color:var(--soft);font-weight:700;letter-spacing:.04em}
+.eng-card .v{font-size:22px;font-weight:800;color:var(--brand);margin-top:3px}
+.eng-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.eng-mod{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:18px}
+.eng-mod h3{font-size:15px;font-weight:700;margin-bottom:4px;display:flex;align-items:center;gap:8px}
+.eng-mod h3 .tag{font-size:10px;background:var(--brand);color:#fff;padding:2px 8px;border-radius:999px;font-weight:700}
+.eng-mod .desc{font-size:12.5px;color:var(--soft);margin-bottom:12px}
+.mini-list{display:flex;gap:0;flex-wrap:wrap;align-items:center;min-height:44px}
+.mini-node{background:var(--brand);color:#fff;font-size:11px;font-weight:700;padding:5px 8px;border-radius:5px;margin:2px}
+.mini-arrow{color:var(--accent);font-weight:800;padding:0 2px}
+.stack-mini{display:flex;flex-direction:column-reverse;gap:4px;min-height:60px}
+.stack-mini div{background:var(--accent);color:#fff;font-size:11px;font-weight:700;padding:5px 9px;border-radius:5px;text-align:center}
+.queue-mini{display:flex;gap:4px;flex-wrap:wrap;min-height:40px}
+.queue-mini div{background:var(--blue);color:#fff;font-size:11px;font-weight:700;padding:5px 9px;border-radius:5px}
+.queue-mini div.front{outline:2px solid var(--accent)}
+.hash-mini{display:grid;grid-template-columns:repeat(6,1fr);gap:5px}
+.hash-mini .bk{border:1px solid var(--line);border-radius:6px;padding:4px;min-height:34px;font-size:10px;background:#FBFAF6}
+.hash-mini .bk span{display:inline-block;background:var(--blue);color:#fff;border-radius:3px;padding:1px 5px;margin:1px;font-size:9.5px;font-weight:700}
+.sort-res{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.sort-res div{background:#FBFAF6;border:1px solid var(--line);border-radius:7px;padding:7px 10px;font-size:11.5px;min-width:84px}
+.sort-res div b{display:block;font-size:14px;color:var(--brand)}
+.tree-mini{font-family:Consolas,monospace;font-size:11px;line-height:1.5;background:#FBFAF6;border:1px solid var(--line);border-radius:8px;padding:10px;white-space:pre;overflow-x:auto}
+footer{border-top:1px solid var(--line);padding:30px 0 40px;margin-top:20px;font-size:13px;color:var(--soft)}
+.foot{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
+.foot strong{color:var(--ink);display:block;margin-bottom:8px}
+
+/* Drawer / modal */
+.overlay{position:fixed;inset:0;background:rgba(28,28,26,.45);opacity:0;pointer-events:none;transition:.3s;z-index:80}
+.overlay.open{opacity:1;pointer-events:auto}
+.drawer{position:fixed;top:0;right:0;height:100%;width:min(410px,100%);background:var(--surface);z-index:90;transform:translateX(100%);transition:.32s cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column;box-shadow:-20px 0 60px rgba(0,0,0,.15)}
+.drawer.open{transform:translateX(0)}
+.drawer-head{display:flex;align-items:center;justify-content:space-between;padding:18px 22px;border-bottom:1px solid var(--line)}
+.drawer-head h3{font-size:17px;font-weight:700}
+.icon-btn{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;color:var(--soft);transition:.2s}
+.icon-btn:hover{background:var(--bg);color:var(--ink)}
+.icon-btn svg{width:17px;height:17px;stroke:currentColor}
+.drawer-body{flex:1;overflow-y:auto;padding:14px 22px}
+.cart-item{display:flex;gap:12px;padding:12px 0;border-bottom:1px solid var(--line)}
+.cart-thumb{width:64px;height:64px;border-radius:9px;flex-shrink:0;display:grid;place-items:center}
+.cart-thumb svg{width:50%;height:50%;stroke:rgba(255,255,255,.92);fill:none;stroke-width:1.4}
+.cart-info{flex:1;min-width:0}
+.cart-name{font-size:13.5px;font-weight:600;line-height:1.35}
+.cart-price{font-size:12.5px;color:var(--soft);margin-top:2px}
+.cart-row{display:flex;align-items:center;justify-content:space-between;margin-top:7px}
+.qty{display:inline-flex;align-items:center;border:1px solid var(--line);border-radius:999px}
+.qty button{width:28px;height:28px;display:grid;place-items:center;font-size:15px;color:var(--soft)}
+.qty button:hover{background:var(--bg);color:var(--ink)}
+.qty span{min-width:26px;text-align:center;font-weight:700;font-size:13px}
+.line-total{font-weight:700;font-size:13.5px}
+.remove{color:var(--danger);font-size:12px;margin-top:5px;display:inline-block}
+.remove:hover{text-decoration:underline}
+.cart-empty{text-align:center;padding:50px 10px;color:var(--soft)}
+.drawer-foot{padding:16px 22px 20px;border-top:1px solid var(--line);background:var(--bg)}
+.sum-row{display:flex;justify-content:space-between;font-size:13.5px;margin-bottom:6px;color:var(--soft)}
+.sum-row.total{font-size:17px;font-weight:800;color:var(--ink);margin:10px 0 14px;padding-top:10px;border-top:1px dashed var(--line)}
+.undo-hint{font-size:11.5px;color:var(--soft);margin-top:8px;text-align:center}
+.modal{position:fixed;inset:0;z-index:100;display:none;align-items:center;justify-content:center;padding:20px}
+.modal.open{display:flex}
+.modal-card{background:var(--surface);border-radius:16px;width:min(480px,100%);max-height:92vh;overflow-y:auto;box-shadow:0 30px 80px rgba(0,0,0,.25)}
+.modal-head{padding:20px 24px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;background:var(--surface)}
+.modal-head h3{font-size:17px;font-weight:700}
+.modal-body{padding:22px 24px}
+.field{margin-bottom:14px}
+.field label{display:block;font-size:12.5px;font-weight:600;margin-bottom:5px}
+.field input,.field textarea{width:100%;padding:10px 13px;border:1px solid var(--line);border-radius:9px;outline:none;background:var(--bg)}
+.field input:focus,.field textarea:focus{border-color:var(--brand);background:#fff}
+.order-summary{background:var(--bg);border-radius:10px;padding:13px 15px;font-size:13px;margin-bottom:16px}
+.order-summary .row{display:flex;justify-content:space-between;margin-bottom:5px;color:var(--soft)}
+.order-summary .row.total{font-weight:800;color:var(--ink);font-size:15px;margin-top:7px;padding-top:7px;border-top:1px dashed var(--line)}
+.success{text-align:center;padding:20px 10px}
+.success .circle{width:68px;height:68px;border-radius:50%;background:#EAF3ED;display:grid;place-items:center;margin:0 auto 16px}
+.success .circle svg{width:34px;height:34px;stroke:var(--brand)}
+.success h3{font-size:21px;font-weight:800}
+.success p{color:var(--soft);margin-top:7px;font-size:14px}
+.order-id{display:inline-block;margin-top:14px;background:var(--bg);border:1px dashed var(--brand);color:var(--brand);font-weight:800;padding:7px 16px;border-radius:9px;font-size:13.5px;letter-spacing:.05em}
+.queue-track{display:flex;gap:4px;flex-wrap:wrap;justify-content:center;margin:14px 0;min-height:30px}
+.queue-track div{background:var(--blue);color:#fff;font-size:11px;font-weight:700;padding:4px 8px;border-radius:5px}
+.toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);background:var(--ink);color:#fff;padding:10px 20px;border-radius:999px;font-size:13.5px;font-weight:600;z-index:200;opacity:0;transition:.25s;pointer-events:none}
+.toast.show{opacity:1}
+@media(max-width:960px){.grid{grid-template-columns:repeat(3,1fr)}.hero{grid-template-columns:1fr}.eng-grid{grid-template-columns:1fr}}
+@media(max-width:680px){.grid{grid-template-columns:repeat(2,1fr);gap:12px}.search input{width:130px}.search input:focus{width:160px}.view-switch{order:3;width:100%;justify-content:center}.nav{flex-wrap:wrap;height:auto;padding:10px 0}.wrap{padding:0 16px}}
+
+/* Login modal (store) */
+.login-modal{position:fixed;inset:0;z-index:150;display:none;align-items:center;justify-content:center;padding:20px;background:rgba(28,28,26,.55);backdrop-filter:blur(4px)}
+.login-modal.open{display:flex}
+.login-card{background:var(--surface);border-radius:16px;width:min(400px,100%);padding:28px 28px 24px;box-shadow:0 30px 80px rgba(0,0,0,.3)}
+.login-card h3{font-size:20px;font-weight:800;color:var(--brand);margin-bottom:4px}
+.login-card .sub{font-size:13px;color:var(--soft);margin-bottom:18px}
+.login-card .field{margin-bottom:14px}
+.login-card .field label{display:block;font-size:12.5px;font-weight:600;margin-bottom:5px}
+.login-card .field input{width:100%;padding:11px 13px;border:1px solid var(--line);border-radius:9px;outline:none;background:var(--bg);font:inherit;font-size:14px}
+.login-card .field input:focus{border-color:var(--brand);background:#fff}
+.login-card .err{color:var(--danger);font-size:12.5px;margin:-6px 0 10px;min-height:16px;font-weight:600}
+.login-card .btn-login{width:100%;padding:12px;border-radius:10px;background:var(--brand);color:#fff;font-weight:700;font-size:14.5px;border:0;cursor:pointer;font:inherit;transition:.18s}
+.login-card .btn-login:hover{background:var(--deep)}
+.login-card .hint{margin-top:14px;font-size:11.5px;color:var(--soft);background:var(--bg);border:1px dashed var(--line);border-radius:8px;padding:9px 12px;line-height:1.5}
+.user-btn{display:inline-flex;align-items:center;gap:6px;height:42px;padding:0 14px;border-radius:999px;border:1px solid var(--line);background:var(--surface);font-size:13px;font-weight:600;color:var(--ink);cursor:pointer;transition:.2s;white-space:nowrap}
+.user-btn:hover{background:var(--brand);border-color:var(--brand);color:#fff}
+.user-btn.logged{background:var(--brand);color:#fff;border-color:var(--brand)}
+
+/* Payment methods */
+.pay-label{display:block;font-size:12.5px;font-weight:600;margin-bottom:8px;margin-top:4px}
+.pay-options{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:6px}
+.pay-opt{display:flex;align-items:center;gap:9px;padding:11px 12px;border:1.5px solid var(--line);border-radius:10px;cursor:pointer;font-size:13px;font-weight:600;background:var(--bg);transition:.15s;position:relative}
+.pay-opt:hover{border-color:var(--brand)}
+.pay-opt input{position:absolute;opacity:0;pointer-events:none}
+.pay-opt .pm-ico{width:30px;height:30px;border-radius:7px;display:grid;place-items:center;font-size:11px;font-weight:800;color:#fff;flex-shrink:0}
+.pay-opt .pm-name{line-height:1.25}
+.pay-opt .pm-name small{display:block;font-weight:500;font-size:10.5px;color:var(--soft)}
+.pay-opt:has(input:checked){border-color:var(--brand);background:#EAF3ED;box-shadow:0 0 0 3px rgba(47,93,67,.12)}
+.pay-opt:has(input:checked) .pm-name small{color:var(--brand)}
+.pay-detail{display:none;margin:10px 0 4px;background:var(--bg);border:1px dashed var(--line);border-radius:10px;padding:12px 14px;font-size:12.5px;line-height:1.7}
+.pay-detail.show{display:block}
+.pay-detail b{color:var(--brand)}
+.pay-detail .qr{width:130px;height:130px;margin:8px auto 4px;border-radius:8px;background:repeating-conic-gradient(#1C1C1A 0% 25%,#fff 0% 50%) 50%/14px 14px;display:grid;place-items:center}
+.pay-detail .qr span{background:#fff;padding:3px 6px;border-radius:4px;font-size:9px;font-weight:800;color:#1C1C1A}
+@media(max-width:520px){.pay-options{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap nav">
+    <a class="logo" href="#"><span class="logo-mark">T</span>TRUNG HIẾU</a>
+    <div class="view-switch">
+      <button class="active" data-view="store">Cửa hàng</button>
+      <button data-view="engine">Bộ máy vận hành (CTDL)</button>
+    </div>
+    <div class="nav-right">
+      <button class="user-btn" id="userBtn">👤 Đăng nhập</button>
+      <div class="search">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+        <input id="searchInput" placeholder="Tìm sản phẩm… (Hash Table)" aria-label="Tìm">
+      </div>
+      <button class="cart-btn" id="cartBtn" aria-label="Giỏ hàng">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="20" r="1.5"/><circle cx="18" cy="20" r="1.5"/><path d="M2 3h2.5l2.6 12.4a2 2 0 0 0 2 1.6h8.4a2 2 0 0 0 2-1.6L21.5 7H6"/></svg>
+        <span class="badge" id="cartBadge">0</span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- ================= STORE VIEW ================= -->
+<main class="view active" id="view-store">
+  <section class="wrap hero">
+    <div>
+      <span class="eyebrow">Cửa hàng thủ công — chạy trên Bộ máy CTDL</span>
+      <h1>Mua sắm thật, bên dưới là<br><em>5 cấu trúc dữ liệu</em> đang làm việc.</h1>
+      <p>Mỗi thao tác của bạn — tìm kiếm, thêm giỏ, đặt hàng — đều được phục vụ bởi LinkedList, Stack, Queue, BST/AVL, Hash Table và QuickSort. Bấm tab “Bộ máy vận hành” để xem tận bên trong.</p>
+      <div class="hero-cta">
+        <a href="#products" class="btn btn-primary">Mua sắm ngay
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+        <button class="btn btn-ghost" id="toEngine">Xem bộ máy bên trong</button>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="chip chip1"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M20 6 9 17l-5-5"/></svg>Hash index: O(1)</div>
+      <div class="engine-badge">
+        <div class="tag">Bộ máy đang chạy</div>
+        <div class="big mono" id="heroOps">0 thao tác</div>
+        <div class="row"><span>Sản phẩm trong kho</span><b class="mono" id="heroStock">12</b></div>
+        <div class="row"><span>Đơn đã xử lý (Queue)</span><b class="mono" id="heroOrders">0</b></div>
+      </div>
+      <div class="chip chip2"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M12 3v4M12 18v4M4.9 4.9l2.8 2.8M16.3 16.3l2.8 2.8M2 12h4M18 12h4"/></svg>QuickSort: O(n log n)</div>
+    </div>
+  </section>
+
+  <section class="wrap section" id="products">
+    <div class="sec-head">
+      <div><h2>Tất cả sản phẩm</h2><p id="resultCount">12 sản phẩm — sắp xếp & tìm kiếm bằng bộ máy CTDL</p></div>
+      <div class="toolbar">
+        <div id="catFilters"></div>
+        <select id="sortSel"><option value="default">Sắp xếp: Mặc định</option><option value="price-asc">Giá tăng dần</option><option value="price-desc">Giá giảm dần</option><option value="rating-desc">Đánh giá cao nhất</option></select>
+      </div>
+    </div>
+    <div class="grid" id="productGrid"></div>
+  </section>
+
+  <footer><div class="wrap foot">
+    <div style="max-width:300px"><strong>TRUNG HIẾU</strong>Web TMĐT mini chạy trên lõi Cấu trúc Dữ liệu &amp; Giải thuật: LinkedList, Stack, Queue, BST/AVL, Hash Table, QuickSort. Giỏ hàng lưu localStorage.</div>
+    <div><strong>Cửa hàng</strong><a href="#products">Tất cả</a><a href="#products">Đồ uống</a><a href="#products">Trang trí</a><a href="#products">Phụ kiện</a></div>
+    <div><strong>Bộ máy</strong><a href="#" id="footEngine">Xem trực quan CTDL</a><br>Đơn hàng xử lý FIFO<br>Hotline: 090x xxx xxx</div>
+  </div></footer>
+</main>
+
+<!-- ================= ENGINE VIEW ================= -->
+<main class="view" id="view-engine">
+  <section class="wrap section">
+    <h2 style="font-size:26px;font-weight:800;margin-top:10px">Bộ máy vận hành — 5 cấu trúc dữ liệu đang phục vụ cửa hàng</h2>
+    <p class="desc" style="color:var(--soft);margin:6px 0 4px">Mỗi thao tác ở tab “Cửa hàng” cập nhật trực tiếp các cấu trúc bên dưới. Đây là minh chứng trực quan cho lựa chọn CTDL.</p>
+    <div class="eng-stats">
+      <div class="eng-card"><div class="k">Kho (LinkedList)</div><div class="v mono" id="eInv">0</div></div>
+      <div class="eng-card"><div class="k">Giỏ hàng (items)</div><div class="v mono" id="eCart">0</div></div>
+      <div class="eng-card"><div class="k">Undo Stack (LIFO)</div><div class="v mono" id="eStack">0</div></div>
+      <div class="eng-card"><div class="k">Đơn trong Queue (FIFO)</div><div class="v mono" id="eQueue">0</div></div>
+      <div class="eng-card"><div class="k">BST index theo ID</div><div class="v mono" id="eBst">0</div></div>
+      <div class="eng-card"><div class="k">Hash index theo tên</div><div class="v mono" id="eHash">0</div></div>
+    </div>
+    <div class="eng-grid">
+      <div class="eng-mod">
+        <h3>Module 1 · Kho hàng <span class="tag">LinkedList đôi</span></h3>
+        <div class="desc">Thêm đầu/cuối O(1). Hiển thị 8 nút đầu của danh sách liên kết đôi.</div>
+        <div class="mini-list" id="eLL"></div>
+      </div>
+      <div class="eng-mod">
+        <h3>Module 2 · Undo giỏ hàng <span class="tag">Stack LIFO</span></h3>
+        <div class="desc">Mỗi lần xóa SP khỏi giỏ được đẩy vào Stack; Undo pop khôi phục (đỉnh trên cùng).</div>
+        <div class="stack-mini" id="eStackViz"></div>
+      </div>
+      <div class="eng-mod">
+        <h3>Module 2 · Hàng đợi đơn hàng <span class="tag">Queue FIFO</span></h3>
+        <div class="desc">Đơn đặt hàng vào cuối, xử lý từ đầu. Đơn đang xử lý được viền vàng.</div>
+        <div class="queue-mini" id="eQueueViz"></div>
+      </div>
+      <div class="eng-mod">
+        <h3>Module 3 · Chỉ mục ID <span class="tag">BST + AVL</span></h3>
+        <div class="desc">Cây BST cân bằng (chèn xáo trộn). Duyệt In-order cho ID tăng dần.</div>
+        <div class="tree-mini" id="eTree"></div>
+        <div style="font-size:11.5px;color:var(--soft);margin-top:6px">Chiều cao BST: <b id="eBstH">0</b> · AVL: <b id="eAvlH">0</b> · log₂(n)≈<b id="eLog">—</b></div>
+      </div>
+      <div class="eng-mod">
+        <h3>Module 4 · Sắp xếp giá <span class="tag">QuickSort đệ quy</span></h3>
+        <div class="desc">Cửa hàng dùng QuickSort O(n log n) để sắp xếp. Benchmark 5 thuật toán trên 5.000 số:</div>
+        <button class="btn btn-primary" id="eBench" style="font-size:12.5px;padding:8px 16px">Chạy benchmark</button>
+        <div class="sort-res" id="eSortRes"></div>
+      </div>
+      <div class="eng-mod">
+        <h3>Module 5 · Tìm kiếm tên <span class="tag">Hash + Self-org</span></h3>
+        <div class="desc">Bảng băm 6 ô (minh họa Separate Chaining) + lịch sử tìm kiếm Move-to-Front.</div>
+        <div class="hash-mini" id="eHashViz"></div>
+        <div style="font-size:11.5px;color:var(--soft);margin-top:8px">Lịch sử (Move-to-Front): <b id="eHist">chưa có</b></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- ================= CART DRAWER ================= -->
+<div class="overlay" id="overlay"></div>
+<aside class="drawer" id="cartDrawer">
+  <div class="drawer-head"><h3>Giỏ hàng của bạn</h3>
+    <button class="icon-btn" id="closeCart"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
+  </div>
+  <div class="drawer-body" id="cartBody"></div>
+  <div class="drawer-foot" id="cartFoot" style="display:none">
+    <div class="sum-row"><span>Tạm tính</span><span class="mono" id="subTotal">0₫</span></div>
+    <div class="sum-row"><span>Phí vận chuyển</span><span class="mono" id="shipFee">0₫</span></div>
+    <div class="sum-row total"><span>Tổng cộng</span><span class="mono" id="grandTotal">0₫</span></div>
+    <button class="btn btn-primary btn-block" id="checkoutBtn">Tiến hành đặt hàng (→ Queue)</button>
+    <div class="undo-hint">Xóa sản phẩm sẽ lưu vào <b>Stack</b> — có thể hoàn tác (Undo) trong tab Bộ máy.</div>
+  </div>
+</aside>
+
+<!-- ================= CHECKOUT MODAL ================= -->
+<div class="modal" id="checkoutModal">
+  <div class="modal-card">
+    <div class="modal-head"><h3>Đặt hàng — đơn vào Queue FIFO</h3>
+      <button class="icon-btn" id="closeModal"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
+    </div>
+    <div class="modal-body" id="modalBody">
+      <div class="order-summary" id="orderSummary"></div>
+      <form id="checkoutForm" novalidate>
+        <div class="field"><label>Họ và tên *</label><input name="name" required placeholder="Nguyễn Văn A"></div>
+        <div class="field"><label>Số điện thoại *</label><input name="phone" required type="tel" placeholder="0901234567"></div>
+        <div class="field"><label>Địa chỉ giao hàng *</label><textarea name="address" required rows="2" placeholder="Số nhà, đường, phường, quận, tỉnh"></textarea></div>
+        <div class="field">
+          <label class="pay-label">Phương thức thanh toán *</label>
+          <div class="pay-options">
+            <label class="pay-opt"><input type="radio" name="payment" value="cod" checked>
+              <span class="pm-ico" style="background:#2F5D43">COD</span>
+              <span class="pm-name">Tiền mặt<small>Thanh toán khi nhận hàng</small></span></label>
+            <label class="pay-opt"><input type="radio" name="payment" value="bank">
+              <span class="pm-ico" style="background:#3A6EA5">NH</span>
+              <span class="pm-name">Chuyển khoản<small>Ngân hàng nội địa</small></span></label>
+            <label class="pay-opt"><input type="radio" name="payment" value="momo">
+              <span class="pm-ico" style="background:#B32E8C">M</span>
+              <span class="pm-name">Ví Momo<small>Quét mã QR / chuyển tiền</small></span></label>
+            <label class="pay-opt"><input type="radio" name="payment" value="zalopay">
+              <span class="pm-ico" style="background:#0098D1">Z</span>
+              <span class="pm-name">ZaloPay<small>Quét mã QR / chuyển tiền</small></span></label>
+          </div>
+          <div class="pay-detail" id="payDetail-cod">Thanh toán <b>tiền mặt</b> cho shipper khi nhận hàng. Vui lòng chuẩn bị đúng số tiền.</div>
+          <div class="pay-detail" id="payDetail-bank">
+            <b>Ngân hàng Vietcombank</b> — STK: <b>0123 4567 8901</b><br>
+            Chủ tài khoản: <b>TRUONG TRUNG HIEU</b><br>
+            Nội dung chuyển: <b class="mono" id="bankNote">TH[MÃ ĐƠN]</b><br>
+            Sau khi chuyển, nhân viên sẽ xác nhận trong vòng 5 phút.
+          </div>
+          <div class="pay-detail" id="payDetail-momo">
+            <b>Ví Momo</b> — SĐT: <b>0901 234 567</b> (Trung Hiếu)<br>
+            Quét mã QR bên dưới hoặc chuyển khoản vào ví Momo.<br>
+            <div class="qr"><span>MOMO</span></div>
+            Nội dung: <b class="mono" id="momoNote">TH[MÃ ĐƠN]</b>
+          </div>
+          <div class="pay-detail" id="payDetail-zalopay">
+            <b>ZaloPay</b> — SĐT: <b>0901 234 567</b> (Trung Hiếu)<br>
+            Quét mã QR bên dưới hoặc mở app ZaloPay để thanh toán.<br>
+            <div class="qr"><span>ZALOPAY</span></div>
+            Nội dung: <b class="mono" id="zaloNote">TH[MÃ ĐƠN]</b>
+          </div>
+        </div>
+        <button type="submit" class="btn btn-accent btn-block">Xác nhận đặt hàng</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- ================= LOGIN MODAL (store) ================= -->
+<div class="login-modal" id="loginModal">
+  <div class="login-card">
+    <h3>Đăng nhập Trung Hiếu</h3>
+    <p class="sub">Đăng nhập để đặt hàng và thanh toán.</p>
+    <form id="loginForm" novalidate>
+      <div class="field"><label>Tên đăng nhập</label><input name="username" id="loginUser" placeholder="trunghieu123" autocomplete="username"></div>
+      <div class="field"><label>Mật khẩu</label><input name="password" id="loginPass" type="password" placeholder="•••••••••" autocomplete="current-password"></div>
+      <div class="err" id="loginErr"></div>
+      <button type="submit" class="btn-login">Đăng nhập</button>
+    </form>
+    <div class="hint">Tài khoản demo: <b>trunghieu123</b> / <b>123456789</b></div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+<script>
+/* ============ DỮ LIỆU SẢN PHẨM (12 SP) ============ */
+const ICONS={coffee:'<path d="M17 8h1a3 3 0 0 1 0 6h-1"/><path d="M3 8h14v6a5 5 0 0 1-5 5H8a5 5 0 0 1-5-5V8z"/><path d="M6 2c.5 1 .5 2 0 3M10 2c.5 1 .5 2 0 3M14 2c.5 1 .5 2 0 3"/>',
+candle:'<path d="M12 3c1.5 1.5 2 2.5 2 3.5a2 2 0 0 1-4 0C10 5.5 10.5 4.5 12 3z"/><rect x="8" y="9" width="8" height="11" rx="1.5"/><path d="M8 13h8"/>',
+cup:'<path d="M4 8h13v6a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5V8z"/><path d="M17 9h2a2.5 2.5 0 0 1 0 5h-2"/>',
+bag:'<path d="M6 8h12l-1 12H7L6 8z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/>',
+leaf:'<path d="M5 19C5 11 11 5 20 4c-1 9-7 15-15 15z"/><path d="M5 19c3-5 7-8 12-10"/>',
+lamp:'<path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-4 10.5c.8.7 1 1.5 1 2.5h6c0-1 .2-1.8 1-2.5A6 6 0 0 0 12 3z"/>',
+book:'<path d="M5 4h11a2 2 0 0 1 2 2v14H7a2 2 0 0 1-2-2V4z"/><path d="M5 18a2 2 0 0 1 2-2h11"/>',
+clock:'<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
+shirt:'<path d="M9 4 6 6l-2 3 3 2v9h10v-9l3-2-2-3-3-2a3 3 0 0 1-6 0z"/>',
+headphone:'<path d="M4 14v-2a8 8 0 0 1 16 0v2"/><rect x="3" y="14" width="4" height="6" rx="1.5"/><rect x="17" y="14" width="4" height="6" rx="1.5"/>',
+bottle:'<path d="M10 2h4v3l1 2v13a2 2 0 0 1-2 2h-2a2 2 0 0 1-2-2V7l1-2V2z"/><path d="M9 12h6"/>',
+flower:'<circle cx="12" cy="12" r="2.5"/><path d="M12 9.5a2.5 2.5 0 0 1 0-5 2.5 2.5 0 0 1 0 5zM12 14.5a2.5 2.5 0 0 1 0 5 2.5 2.5 0 0 1 0-5zM9.5 12a2.5 2.5 0 0 1-5 0 2.5 2.5 0 0 1 5 0zM14.5 12a2.5 2.5 0 0 1 5 0 2.5 2.5 0 0 1-5 0z"/>'};
+const PRODUCTS=[
+ {id:1,name:'Cà phê rang xay Đắk Lắk 250g',cat:'Đồ uống',price:129000,rating:4.8,stock:42,grad:['#7A4E2D','#4A2C17'],icon:'coffee'},
+ {id:2,name:'Trà hoa nhài Thái Nguyên 100g',cat:'Đồ uống',price:75000,rating:4.6,stock:88,grad:['#7A9B6B','#47613D'],icon:'leaf'},
+ {id:3,name:'Nến thơm soy wax hương quế',cat:'Trang trí',price:89000,rating:4.5,stock:35,grad:['#C98A2B','#8A5A1B'],icon:'candle'},
+ {id:4,name:'Ly gốm sứ thủ công men rạn',cat:'Trang trí',price:159000,rating:4.9,stock:21,grad:['#4A6B5C','#2C4439'],icon:'cup'},
+ {id:5,name:'Đèn bàn gỗ thông cảm ứng',cat:'Trang trí',price:349000,rating:4.7,stock:12,grad:['#B08968','#73553A'],icon:'lamp'},
+ {id:6,name:'Đồng hồ treo gỗ sồi minimal',cat:'Trang trí',price:459000,rating:4.4,stock:8,grad:['#5C6B7A','#35404C'],icon:'clock'},
+ {id:7,name:'Túi tote canvas vải dày 12oz',cat:'Phụ kiện',price:199000,rating:4.3,stock:56,grad:['#8A7B6B','#574B3F'],icon:'bag'},
+ {id:8,name:'Sổ tay da bò thật A5',cat:'Phụ kiện',price:219000,rating:4.6,stock:33,grad:['#8C5A3C','#573521'],icon:'book'},
+ {id:9,name:'Áo phông linen trơn cổ tròn',cat:'Thời trang',price:259000,rating:4.2,stock:74,grad:['#6B7A8C','#3F4A5A'],icon:'shirt'},
+ {id:10,name:'Tai nghe không dây chống ồn',cat:'Công nghệ',price:1290000,rating:4.7,stock:15,grad:['#3A3A44','#1C1C22'],icon:'headphone'},
+ {id:11,name:'Bình giữ nhiệt inox 500ml',cat:'Đồ dùng',price:349000,rating:4.5,stock:47,grad:['#A8544A','#6E332C'],icon:'bottle'},
+ {id:12,name:'Hoa khô trang trí bó nhỏ',cat:'Trang trí',price:169000,rating:4.1,stock:29,grad:['#B58A9E','#7A5668'],icon:'flower'}
+];
+const CATS=['Tất cả',...new Set(PRODUCTS.map(p=>p.cat))];
+const FREE_SHIP=500000, SHIP=30000;
+const fmt=n=>n.toLocaleString('vi-VN')+'₫';
+const $=s=>document.querySelector(s); const $$=s=>document.querySelectorAll(s);
+const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+let ops=0; const bump=()=>{ops++;$('#heroOps').textContent=fmtOps()};
+const fmtOps=()=>ops+' thao tác';
+function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('show');clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('show'),2200)}
+
+/* ============ BỘ MÁY CTDL (phục vụ cửa hàng) ============ */
+class LNode{constructor(d){this.data=d;this.prev=this.next=null}}
+class LinkedList{constructor(){this.head=this.tail=null;this.size=0}
+ pushBack(d){const n=new LNode(d);if(!this.head)this.head=this.tail=n;else{n.prev=this.tail;this.tail.next=n;this.tail=n}this.size++}
+ toArray(l){const a=[];for(let c=this.head;c&&a.length<l;c=c.next)a.push(c.data);return a}}
+const inv=new LinkedList();PRODUCTS.forEach(p=>inv.pushBack(p));
+
+class BNode{constructor(d){this.data=d;this.left=this.right=null}}
+class BST{constructor(){this.root=null;this.n=0}
+ ins(r,d){if(!r)return new BNode(d);if(d.id<r.data.id)r.left=this.ins(r.left,d);else if(d.id>r.data.id)r.right=this.ins(r.right,d);else r.data=d;return r}
+ insert(d){this.root=this.ins(this.root,d);this.n++}
+ height(r=this.root){return r?1+Math.max(this.height(r.left),this.height(r.right)):0}
+ inorder(r=this.root,a=[]){if(!r)return a;this.inorder(r.left,a);a.push(r.data.id);this.inorder(r.right,a);return a}}
+class AVL extends BST{h(r){return r?r.h:0}bal(r){return r?this.h(r.left)-this.h(r.right):0}
+ rotR(y){const x=y.left;y.left=x.right;x.right=y;y.h=1+Math.max(this.h(y.left),this.h(y.right));x.h=1+Math.max(this.h(x.left),this.h(x.right));return x}
+ rotL(x){const y=x.right;x.right=y.left;y.left=x;x.h=1+Math.max(this.h(x.left),this.h(x.right));y.h=1+Math.max(this.h(y.left),this.h(y.right));return y}
+ ins(r,d){if(!r){const n=new BNode(d);n.h=1;return n}
+  if(d.id<r.data.id)r.left=this.ins(r.left,d);else if(d.id>r.data.id)r.right=this.ins(r.right,d);else{r.data=d;return r}
+  r.h=1+Math.max(this.h(r.left),this.h(r.right));const b=this.bal(r);
+  if(b>1&&d.id<r.left.data.id)return this.rotR(r);if(b<-1&&d.id>r.right.data.id)return this.rotL(r);
+  if(b>1){r.left=this.rotL(r.left);return this.rotR(r)}
+  if(b<-1){r.right=this.rotR(r.right);return this.rotL(r)}
+  return r}
+ insert(d){this.root=this.ins(this.root,d);this.n++}}
+const bst=new BST(),avl=new AVL();PRODUCTS.forEach(p=>{bst.insert(p);avl.insert(p)});
+
+class HashTable{constructor(m){this.m=m;this.b=Array.from({length:m},()=>[]);this.size=0}
+ hash(s){let h=0;for(const c of s)h=(h*31+c.charCodeAt(0))%this.m;return h}
+ insert(p){const b=this.hash(p.name);const e=this.b[b].find(x=>x.name===p.name);if(e)e.data=p;else{this.b[b].push({name:p.name,data:p});this.size++}}
+ search(n){return this.b[this.hash(n)].find(x=>x.name===n)||null}}
+const ht=new HashTable(7);PRODUCTS.forEach(p=>ht.insert(p));
+
+let undoStack=[];            // Stack: các mục đã xóa khỏi giỏ (LIFO)
+let orderQueue=[];           // Queue: đơn hàng chờ xử lý (FIFO)
+let processedOrders=0;
+let searchHistory=[];        // Self-organizing list (Move-to-Front)
+
+/* ============ VIEW SWITCH ============ */
+function setView(v){$$('.view-switch button').forEach(b=>b.classList.toggle('active',b.dataset.view===v));$$('.view').forEach(x=>x.classList.toggle('active',x.id==='view-'+v));if(v==='engine')renderEngine();window.scrollTo({top:0,behavior:'smooth'})}
+$$('.view-switch button').forEach(b=>b.onclick=()=>setView(b.dataset.view));
+$('#toEngine').onclick=()=>setView('engine');
+$('#footEngine').onclick=e=>{e.preventDefault();setView('engine')};
+
+/* ============ STORE: lọc / tìm / sắp xếp ============ */
+let activeCat='Tất cả', query='', sortMode='default';
+function qSort(a,lo,hi,key){if(lo>=hi)return;const p=a[hi][key];let i=lo-1;for(let j=lo;j<hi;j++)if(a[j][key]<=p){i++;[a[i],a[j]]=[a[j],a[i]]}[a[i+1],a[hi]]=[a[hi],a[i+1]];qSort(a,lo,i,key);qSort(a,i+2,hi,key)}
+function filtered(){
+  let list=PRODUCTS.slice();
+  if(activeCat!=='Tất cả')list=list.filter(p=>p.cat===activeCat);
+  if(query){bump();const r=ht.search(query);list=r?[r.data]:PRODUCTS.filter(p=>p.name.toLowerCase().includes(query.toLowerCase()));}
+  if(sortMode==='price-asc')qSort(list,0,list.length-1,'price');
+  else if(sortMode==='price-desc'){qSort(list,0,list.length-1,'price');list.reverse()}
+  else if(sortMode==='rating-desc'){qSort(list,0,list.length-1,'rating');list.reverse()}
+  return list;
+}
+function renderCats(){$('#catFilters').innerHTML=CATS.map(c=>`<button class="chipf ${c===activeCat?'active':''}" data-cat="${c}">${c}</button>`).join('');$$('#catFilters .chipf').forEach(b=>b.onclick=()=>{activeCat=b.dataset.cat;renderCats();renderProducts()})}
+function renderProducts(){
+  const list=filtered();
+  $('#resultCount').textContent=`${list.length} sản phẩm`+(query?` khớp "${query}"`:' — sắp xếp & tìm kiếm bằng bộ máy CTDL');
+  if(!list.length){$('#productGrid').innerHTML='<div class="empty">Không tìm thấy sản phẩm nào.</div>';return}
+  $('#productGrid').innerHTML=list.map(p=>`
+   <div class="card">
+    <div class="card-media" style="background:linear-gradient(145deg,${p.grad[0]},${p.grad[1]})">
+      <span class="card-cat">${p.cat}</span><span class="card-stock">Tồn ${p.stock}</span>
+      <svg class="ic" viewBox="0 0 24 24">${ICONS[p.icon]}</svg>
+    </div>
+    <div class="card-body">
+      <div class="card-name">${p.name}</div>
+      <div class="card-meta">★ ${p.rating} · ID #${p.id}</div>
+      <div class="card-price mono">${fmt(p.price)}</div>
+      <button class="add-btn" data-add="${p.id}"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>Thêm vào giỏ</button>
+    </div>
+   </div>`).join('');
+  $$('[data-add]').forEach(b=>b.onclick=()=>addToCart(+b.dataset.add));
+}
+$('#searchInput').addEventListener('input',e=>{
+  query=e.target.value.trim();
+  if(query){bump();const idx=searchHistory.findIndex(s=>s===query);if(idx>=0)searchHistory.splice(idx,1);searchHistory.unshift(query);if(searchHistory.length>5)searchHistory.pop()}
+  renderProducts();
+});
+$('#sortSel').onchange=e=>{sortMode=e.target.value;bump();renderProducts()};
+
+/* ============ GIỎ HÀNG (cart + Stack Undo) ============ */
+let cart=JSON.parse(localStorage.getItem('trunghieu_tmdt_v1')||'{}');
+const saveCart=()=>localStorage.setItem('trunghieu_tmdt_v1',JSON.stringify(cart));
+const cartItems=()=>Object.entries(cart).map(([id,q])=>({...(PRODUCTS.find(p=>p.id==+id)||{}),qty:q})).filter(i=>i.id);
+function addToCart(id){cart[id]=(cart[id]||0)+1;saveCart();bump();updateUI();toast('Đã thêm vào giỏ (Stack/Queue sẵn sàng)')}
+function changeQty(id,d){cart[id]=(cart[id]||0)+d;if(cart[id]<=0)delete cart[id];saveCart();bump();updateUI()}
+function removeFromCart(id){const q=cart[id];if(!q)return;undoStack.push({id,qty:q});delete cart[id];saveCart();bump();updateUI();toast('Đã xóa — lưu vào Stack (Undo ở tab Bộ máy)')}
+function undoRemove(){if(!undoStack.length)return toast('Stack trống');const it=undoStack.pop();cart[it.id]=(cart[it.id]||0)+it.qty;saveCart();bump();updateUI();toast('Undo (LIFO): đã khôi phục sản phẩm')}
+function totals(){const it=cartItems();const sub=it.reduce((s,i)=>s+i.price*i.qty,0);const ship=sub===0?0:(sub>=FREE_SHIP?0:SHIP);return{sub,ship,grand:sub+ship,count:it.reduce((s,i)=>s+i.qty,0)}}
+function renderCart(){
+  const it=cartItems();const body=$('#cartBody');
+  if(!it.length){body.innerHTML='<div class="cart-empty">Giỏ hàng trống.<br><small style="font-size:12px">Xóa sản phẩm sẽ lưu vào Stack để Undo.</small></div>';$('#cartFoot').style.display='none';return}
+  $('#cartFoot').style.display='block';
+  body.innerHTML=it.map(i=>`
+   <div class="cart-item">
+    <div class="cart-thumb" style="background:linear-gradient(145deg,${i.grad[0]},${i.grad[1]})"><svg viewBox="0 0 24 24">${ICONS[i.icon]}</svg></div>
+    <div class="cart-info">
+      <div class="cart-name">${i.name}</div><div class="cart-price mono">${fmt(i.price)}</div>
+      <div class="cart-row">
+        <div class="qty"><button data-dec="${i.id}">−</button><span>${i.qty}</span><button data-inc="${i.id}">+</button></div>
+        <div class="line-total mono">${fmt(i.price*i.qty)}</div>
+      </div>
+      <button class="remove" data-rm="${i.id}">Xóa (→ Stack)</button>
+    </div>
+   </div>`).join('');
+  body.querySelectorAll('[data-inc]').forEach(b=>b.onclick=()=>changeQty(+b.dataset.inc,1));
+  body.querySelectorAll('[data-dec]').forEach(b=>b.onclick=()=>changeQty(+b.dataset.dec,-1));
+  body.querySelectorAll('[data-rm]').forEach(b=>b.onclick=()=>removeFromCart(+b.dataset.rm));
+  const t=totals();$('#subTotal').textContent=fmt(t.sub);$('#shipFee').textContent=t.ship===0?'Miễn phí':fmt(t.ship);$('#grandTotal').textContent=fmt(t.grand);
+}
+function updateBadge(){const c=totals().count;const b=$('#cartBadge');b.textContent=c;b.classList.toggle('show',c>0)}
+function updateUI(){updateBadge();renderCart();$('#heroStock').textContent=PRODUCTS.length;$('#heroOrders').textContent=processedOrders}
+const openCart=()=>{$('#cartDrawer').classList.add('open');$('#overlay').classList.add('open')};
+const closeCart=()=>{$('#cartDrawer').classList.remove('open');$('#overlay').classList.remove('open')};
+$('#cartBtn').onclick=openCart;$('#closeCart').onclick=closeCart;$('#overlay').onclick=closeCart;
+
+/* ============ ĐĂNG NHẬP (login portal) ============ */
+const VALID_USER='trunghieu123', VALID_PASS='123456789';
+let currentUser=null;
+try{ if(localStorage.getItem('th_user')===VALID_USER) currentUser=VALID_USER; }catch(e){}
+function renderUserBtn(){const b=$('#userBtn');if(currentUser){b.textContent='👤 '+currentUser;b.classList.add('logged');b.title='Nhấp để đăng xuất'}else{b.textContent='👤 Đăng nhập';b.classList.remove('logged');b.title=''}}
+function doLogin(u){currentUser=u;try{localStorage.setItem('th_user',u)}catch(e){}renderUserBtn();try{parent.postMessage('th:login:'+u,'*')}catch(e){}}
+function doLogout(){currentUser=null;try{localStorage.removeItem('th_user')}catch(e){}renderUserBtn();try{parent.postMessage('th:logout','*')}catch(e){}}
+renderUserBtn();
+$('#userBtn').onclick=()=>{if(currentUser){doLogout();toast('Đã đăng xuất')}else{$('#loginModal').classList.add('open')}};
+$('#loginModal').onclick=e=>{if(e.target.id==='loginModal')$('#loginModal').classList.remove('open')};
+$('#loginForm').onsubmit=e=>{
+  e.preventDefault();const u=$('#loginUser').value.trim(),p=$('#loginPass').value,err=$('#loginErr');
+  if(u===VALID_USER && p===VALID_PASS){doLogin(u);$('#loginModal').classList.remove('open');$('#loginForm').reset();err.textContent='';toast('Đăng nhập thành công — chào mừng '+u)}
+  else err.textContent='Sai tên đăng nhập hoặc mật khẩu. Vui lòng thử lại.';
+};
+/* Đồng bộ đăng nhập từ trang chủ (iframe ↔ parent) */
+window.addEventListener('message',e=>{
+  if(typeof e.data!=='string')return;
+  if(e.data.startsWith('th:login:')){const u=e.data.slice(9);if(u===VALID_USER){currentUser=u;renderUserBtn()}}
+  else if(e.data==='th:logout'){currentUser=null;renderUserBtn()}
+});
+
+/* ============ THANH TOÁN: chi tiết theo phương thức ============ */
+const PAY_NAMES={cod:'Tiền mặt (COD)',bank:'Chuyển khoản ngân hàng',momo:'Ví Momo',zalopay:'ZaloPay'};
+function refreshPayDetail(){
+  const sel=document.querySelector('input[name="payment"]:checked');
+  const val=sel?sel.value:'cod';
+  ['cod','bank','momo','zalopay'].forEach(k=>$('#payDetail-'+k).classList.toggle('show',k===val));
+}
+document.querySelectorAll('input[name="payment"]').forEach(r=>r.onchange=refreshPayDetail);
+refreshPayDetail();
+
+/* ============ CHECKOUT (→ Queue FIFO) ============ */
+$('#checkoutBtn').onclick=()=>{
+  if(!cartItems().length)return;
+  if(!currentUser){toast('Vui lòng đăng nhập trước khi đặt hàng');$('#loginModal').classList.add('open');return}
+  const t=totals();
+  $('#orderSummary').innerHTML=`<div class="row"><span>${totals().count} mặt hàng</span><span class="mono">${fmt(t.sub)}</span></div><div class="row"><span>Vận chuyển</span><span class="mono">${t.ship===0?'Miễn phí':fmt(t.ship)}</span></div><div class="row total"><span>Tổng thanh toán</span><span class="mono">${fmt(t.grand)}</span></div>`;
+  $('#checkoutModal').classList.add('open');closeCart();
+};
+$('#closeModal').onclick=()=>$('#checkoutModal').classList.remove('open');
+$('#checkoutForm').onsubmit=e=>{
+  e.preventDefault();const f=e.target;
+  if(!f.name.value.trim()||!f.phone.value.trim()||!f.address.value.trim())return toast('Vui lòng điền đủ thông tin');
+  const payMethod=(document.querySelector('input[name="payment"]:checked')||{}).value||'cod';
+  const orderId='TH'+Date.now().toString().slice(-6);
+  const t=totals();
+  // Cập nhật nội dung chuyển khoản với mã đơn thực tế
+  $('#bankNote').textContent=orderId;$('#momoNote').textContent=orderId;$('#zaloNote').textContent=orderId;
+  // Enqueue đơn vào Queue
+  orderQueue.push({id:orderId,name:f.name.value.trim(),total:t.grand,pay:payMethod});bump();
+  cart={};saveCart();updateUI();
+  const payHint=payMethod==='cod'
+    ? 'Vui lòng chuẩn bị <b>'+fmt(t.grand)+'</b> để thanh toán khi nhận hàng.'
+    : 'Vui lòng chuyển <b>'+fmt(t.grand)+'</b> theo thông tin <b>'+PAY_NAMES[payMethod]+'</b> đã hiển thị. Đơn sẽ được xác nhận sau khi thanh toán.';
+  $('#modalBody').innerHTML=`<div class="success">
+    <div class="circle"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></div>
+    <h3>Đơn đã vào hàng đợi!</h3>
+    <p>Xin chào <b>${f.name.value.trim()}</b> (${currentUser}). Đơn <span class="mono">#${orderId}</span> đang được xử lý theo FIFO…</p>
+    <p style="margin-top:8px;font-size:13px">Thanh toán: <b>${PAY_NAMES[payMethod]}</b><br>${payHint}</p>
+    <div class="queue-track" id="qTrack"></div>
+    <div class="order-id mono">Mã đơn: ${orderId}</div>
+    <div style="margin-top:20px"><button class="btn btn-primary" onclick="location.reload()">Tiếp tục mua sắm</button></div>
+  </div>`;
+  // Xử lý Queue FIFO với animation
+  (async()=>{const track=$('#qTrack');while(orderQueue.length){const o=orderQueue[0];track.innerHTML=orderQueue.map((x,i)=>`<div class="${i===0?'':''}" style="${i===0?'outline:2px solid var(--accent)':''}">#${x.id.slice(-4)}</div>`).join('');await sleep(500);orderQueue.shift();processedOrders++;$('#heroOrders').textContent=processedOrders;bump()}track.innerHTML='<div style="background:var(--brand)">✓ Đã xử lý xong</div>';toast('Queue FIFO: đơn hàng đã được xử lý')})();
+};
+
+/* ============ ENGINE VIEW (trực quan bộ máy) ============ */
+function renderEngine(){
+  $('#eInv').textContent=inv.size;$('#eCart').textContent=totals().count;$('#eStack').textContent=undoStack.length;
+  $('#eQueue').textContent=orderQueue.length;$('#eBst').textContent=bst.n;$('#eHash').textContent=ht.size;
+  $('#eLL').innerHTML=inv.toArray(8).map((p,i)=>`<span class="mini-node">#${p.id}</span>${i<7?'<span class="mini-arrow">⇄</span>':''}`).join('')+'<span class="mini-arrow">…</span>';
+  $('#eStackViz').innerHTML=undoStack.length?undoStack.slice().reverse().map((u,i)=>`<div style="opacity:${1-i*.15}">Undo #${u.id} ×${u.qty}</div>`).join(''):'<div style="background:#ddd;color:#666">Stack trống</div>';
+  $('#eQueueViz').innerHTML=orderQueue.length?orderQueue.map((o,i)=>`<div class="${i===0?'front':''}">#${o.id.slice(-4)}</div>`).join(''):'<span style="color:var(--soft);font-size:12px">Queue trống — đặt hàng để xem FIFO.</span>';
+  const ino=bst.inorder();$('#eTree').textContent='In-order (ID tăng dần): '+ino.join(' → ');
+  $('#eBstH').textContent=bst.height();$('#eAvlH').textContent=avl.height();$('#eLog').textContent=Math.ceil(Math.log2(bst.n+1));
+  let html='';for(let i=0;i<6;i++){const names=PRODUCTS.filter(p=>{let h=0;for(const c of p.name)h=(h*31+c.charCodeAt(0))%6;return h===i}).map(p=>p.name.split(' ')[0]);html+=`<div class="bk"><b style="color:var(--soft)">[${i}]</b> ${names.map(n=>`<span>${n}</span>`).join('')||'<span style="background:#ddd">—</span>'}</div>`}
+  $('#eHashViz').innerHTML=html;
+  $('#eHist').textContent=searchHistory.length?searchHistory.slice(0,4).join(' → '):'chưa có';
+}
+/* Sort benchmark cho engine view */
+function sSel(a){for(let i=0;i<a.length-1;i++){let m=i;for(let j=i+1;j<a.length;j++)if(a[j]<a[m])m=j;[a[i],a[m]]=[a[m],a[i]]}}
+function sBub(a){let sw;do{sw=false;for(let j=0;j<a.length-1;j++)if(a[j+1]<a[j]){[a[j],a[j+1]]=[a[j+1],a[j]];sw=true}}while(sw)}
+function sIns(a){for(let i=1;i<a.length;i++){const k=a[i];let j=i-1;while(j>=0&&a[j]>k){a[j+1]=a[j];j--}a[j+1]=k}}
+function sQ(a,lo,hi){if(lo>=hi)return;const p=a[hi];let i=lo-1;for(let j=lo;j<hi;j++)if(a[j]<=p){i++;[a[i],a[j]]=[a[j],a[i]]}[a[i+1],a[hi]]=[a[hi],a[i+1]];sQ(a,lo,i);sQ(a,i+2,hi)}
+function sM(a,lo,hi){if(lo>=hi)return;const mid=(lo+hi)>>1;sM(a,lo,mid);sM(a,mid+1,hi);const t=[];let i=lo,j=mid+1;while(i<=mid&&j<=hi)t.push(a[i]<=a[j]?a[i++]:a[j++]);while(i<=mid)t.push(a[i++]);while(j<=hi)t.push(a[j++]);for(let k=0;k<t.length;k++)a[lo+k]=t[k]}
+$('#eBench').onclick=()=>{
+  const N=5000;const base=Array.from({length:N},()=>Math.random()*1e6);
+  const run=(fn)=>{const a=base.slice();const t0=performance.now();fn(a);return(performance.now()-t0).toFixed(2)};
+  const r=[['Selection',()=>sSel(base.slice())],['Bubble',()=>sBub(base.slice())],['Insertion',()=>sIns(base.slice())],['Quick',()=>sQ(base.slice(),0,N-1)],['Merge',()=>sM(base.slice(),0,N-1)]];
+  $('#eSortRes').innerHTML=r.map(([n,fn])=>`<div>${n}<b class="mono">${run(fn)} ms</b></div>`).join('');
+  toast('Benchmark xong: O(n²) chậm hơn O(n log n)');
+};
+
+/* ============ INIT ============ */
+renderCats();renderProducts();updateUI();
+<\/script>
+</body>
+</html>
+</script>
+<script type="text/plain" id="tpl-dash"><!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Trung Hiếu — Web Dashboard TMĐT</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%232F5D43'/%3E%3Cpath d='M10 22V10h3.2l2.8 7 2.8-7H22v12h-2.6v-7.4l-3 7.4h-1.6l-3-7.4V22H10z' fill='%23FAF7F2'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#F4F1EA;--panel:#FFFFFF;--ink:#1C1C1A;--soft:#6E6D66;--line:#E4DED2;--brand:#2F5D43;--brand2:#224531;--accent:#C98A2B;--danger:#B3402F;--blue:#3A6EA5;--radius:12px}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Be Vietnam Pro',system-ui,sans-serif;background:var(--bg);color:var(--ink);line-height:1.5;font-size:14.5px}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
+input,select{font-family:inherit;font-size:14px}
+.mono{font-variant-numeric:tabular-nums;font-family:'SF Mono',Consolas,monospace}
+.wrap{max-width:1280px;margin:0 auto;padding:0 20px}
+
+/* Header */
+header{background:var(--brand2);color:#fff;padding:16px 0;position:sticky;top:0;z-index:50;box-shadow:0 2px 12px rgba(0,0,0,.15)}
+.hdr{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.logo{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:.05em}
+.logo-mark{width:34px;height:34px;border-radius:9px;background:var(--accent);display:grid;place-items:center;font-weight:800;color:#1C1C1A}
+.hdr small{display:block;font-weight:400;opacity:.75;font-size:12px;letter-spacing:.02em}
+.stat-pills{margin-left:auto;display:flex;gap:8px;flex-wrap:wrap}
+.pill{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);padding:6px 12px;border-radius:999px;font-size:12.5px;font-weight:600}
+.pill b{color:#F3C96B}
+
+/* Tabs */
+.tabs{display:flex;gap:6px;padding:14px 0 0;overflow-x:auto;scrollbar-width:thin}
+.tab{flex-shrink:0;padding:9px 16px;border-radius:10px 10px 0 0;background:#E9E3D6;color:var(--soft);font-weight:600;font-size:13.5px;border:1px solid var(--line);border-bottom:none;transition:.15s}
+.tab:hover{color:var(--ink)}
+.tab.active{background:var(--panel);color:var(--brand);border-color:var(--line);box-shadow:0 -2px 0 var(--accent) inset}
+
+/* Panel */
+.panel{display:none;background:var(--panel);border:1px solid var(--line);border-radius:0 var(--radius) var(--radius) var(--radius);padding:22px;margin-bottom:40px;min-height:400px}
+.panel.active{display:block}
+.panel h2{font-size:19px;font-weight:800;margin-bottom:4px}
+.panel .sub{color:var(--soft);font-size:13.5px;margin-bottom:18px}
+.panel h3{font-size:15px;font-weight:700;margin:18px 0 10px;color:var(--brand2)}
+.controls{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:14px}
+.btn{padding:8px 16px;border-radius:8px;font-weight:600;font-size:13.5px;background:var(--brand);color:#fff;transition:.15s;display:inline-flex;align-items:center;gap:6px}
+.btn:hover{background:var(--brand2)}
+.btn.ghost{background:transparent;color:var(--ink);border:1.5px solid var(--line)}
+.btn.ghost:hover{border-color:var(--ink)}
+.btn.accent{background:var(--accent)}
+.btn.accent:hover{background:#b0771f}
+.btn.danger{background:var(--danger)}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+input[type=number],input[type=text],select{padding:8px 11px;border:1px solid var(--line);border-radius:8px;background:#FBFAF6;outline:none;min-width:90px}
+input:focus,select:focus{border-color:var(--brand)}
+label{font-size:12.5px;font-weight:600;color:var(--soft)}
+
+/* Cards / stats */
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-bottom:18px}
+.card{background:linear-gradient(160deg,#FBFAF6,#F1EDE2);border:1px solid var(--line);border-radius:var(--radius);padding:14px 16px}
+.card .k{font-size:12px;color:var(--soft);font-weight:600;letter-spacing:.03em}
+.card .v{font-size:24px;font-weight:800;color:var(--brand);margin-top:4px}
+.card .v small{font-size:13px;font-weight:600;color:var(--soft)}
+
+table{width:100%;border-collapse:collapse;font-size:13px;margin:10px 0}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+th{background:#F1EDE2;font-weight:700}
+tr:nth-child(even) td{background:#FBFAF6}
+
+/* LinkedList viz */
+.ll-wrap{display:flex;gap:0;align-items:center;overflow-x:auto;padding:14px 4px;min-height:90px}
+.ll-node{flex-shrink:0;background:#fff;border:2px solid var(--brand);border-radius:8px;padding:7px 10px;font-size:12px;text-align:center;min-width:74px;position:relative}
+.ll-node .id{font-weight:800;color:var(--brand);font-size:14px}
+.ll-node .pr{font-size:11px;color:var(--soft)}
+.ll-arrow{flex-shrink:0;color:var(--accent);font-weight:800;font-size:18px;padding:0 3px}
+.ll-note{font-size:12px;color:var(--soft);margin-top:6px}
+
+/* Stack & Queue */
+.stack-col{display:flex;flex-direction:column-reverse;gap:6px;min-height:120px;width:260px;border:2px dashed var(--line);border-top:none;border-radius:0 0 10px 10px;padding:8px;align-items:stretch}
+.stack-item{background:var(--accent);color:#fff;border-radius:6px;padding:7px 10px;font-size:12.5px;font-weight:600;text-align:center;animation:pop .25s ease}
+@keyframes pop{from{transform:scale(.7);opacity:0}to{transform:scale(1);opacity:1}}
+.queue-row{display:flex;gap:6px;overflow-x:auto;padding:10px 4px;min-height:60px;align-items:center}
+.q-item{flex-shrink:0;background:var(--blue);color:#fff;border-radius:6px;padding:8px 12px;font-size:12.5px;font-weight:600;animation:pop .25s ease}
+.q-item.front{outline:3px solid var(--accent)}
+.pointer{font-size:11px;color:var(--accent);font-weight:700;text-align:center}
+
+/* Sort bars */
+.bars{display:flex;align-items:flex-end;gap:1px;height:180px;padding:10px 0;border-bottom:2px solid var(--line);margin:10px 0}
+.bar{flex:1;background:var(--brand);min-width:2px;transition:height .05s}
+.bar.sel{background:var(--accent)}
+.sort-result{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
+.sr{background:#FBFAF6;border:1px solid var(--line);border-radius:8px;padding:10px 14px;min-width:130px}
+.sr .n{font-size:12px;color:var(--soft);font-weight:600}
+.sr .t{font-size:18px;font-weight:800;color:var(--brand)}
+.sr.slow .t{color:var(--danger)}
+.sr.fast .t{color:var(--brand)}
+
+/* Hash viz */
+.hash-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:8px;margin:12px 0}
+.bucket{border:1.5px solid var(--line);border-radius:8px;padding:6px;background:#FBFAF6;min-height:52px}
+.bucket .bi{font-size:10.5px;font-weight:700;color:var(--soft);margin-bottom:4px}
+.chain{display:flex;flex-wrap:wrap;gap:4px}
+.chain span{background:var(--blue);color:#fff;font-size:10.5px;padding:2px 6px;border-radius:4px;font-weight:600}
+.sol-item{display:flex;align-items:center;gap:8px;padding:7px 12px;border:1.5px solid var(--line);border-radius:8px;margin-bottom:6px;background:#fff;font-size:13px;transition:.2s}
+.sol-item.top{border-color:var(--accent);background:#FFF8EA;font-weight:700}
+.sol-item .freq{margin-left:auto;background:var(--brand);color:#fff;border-radius:999px;padding:1px 9px;font-size:11.5px;font-weight:700}
+
+/* Tree SVG */
+.tree-svg{width:100%;background:#FBFAF6;border:1px solid var(--line);border-radius:10px;margin:10px 0}
+.tnode circle{fill:var(--brand);stroke:var(--brand2);stroke-width:1.5}
+.tnode text{fill:#fff;font-size:11px;font-weight:700;text-anchor:middle}
+.tline{stroke:var(--soft);stroke-width:1.5}
+.tnode.hl circle{fill:var(--accent)}
+.legend{display:flex;gap:14px;font-size:12px;color:var(--soft);flex-wrap:wrap;margin-top:6px}
+.legend i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:4px;vertical-align:-1px}
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--ink);color:#fff;padding:10px 20px;border-radius:999px;font-size:13.5px;font-weight:600;z-index:200;opacity:0;transition:.25s;pointer-events:none}
+.toast.show{opacity:1}
+footer{padding:24px 0 40px;color:var(--soft);font-size:12.5px;text-align:center}
+@media(max-width:720px){.stat-pills{margin-left:0;width:100%}.panel{padding:14px}}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap hdr">
+    <div class="logo"><span class="logo-mark">TH</span>
+      <div>Trung Hiếu — Mini E-Commerce<small>Web Dashboard — CTDL &amp; Giải thuật (JS phiên bản của lõi C++)</small></div>
+    </div>
+    <div class="stat-pills">
+      <span class="pill">Sản phẩm: <b id="pillN">0</b></span>
+      <span class="pill">Module: <b>5/5</b></span>
+      <span class="pill">RUNTIME: <b>Vanilla JS</b></span>
+    </div>
+  </div>
+  <div class="wrap">
+    <div class="tabs" id="tabs">
+      <button class="tab active" data-v="overview">Tổng quan</button>
+      <button class="tab" data-v="m1">M1: Kho hàng (Linked List)</button>
+      <button class="tab" data-v="m2">M2: Giỏ hàng (Stack) + Queue</button>
+      <button class="tab" data-v="m3">M3: BST + AVL</button>
+      <button class="tab" data-v="m4">M4: Sắp xếp & Lọc</button>
+      <button class="tab" data-v="m5">M5: Hash + Self-org List</button>
+    </div>
+  </div>
+</header>
+
+<main class="wrap" style="padding-top:0">
+
+<!-- ============ OVERVIEW ============ -->
+<section class="panel active" id="v-overview">
+  <h2>Tổng quan kiến trúc</h2>
+  <p class="sub">Lõi hệ thống TMĐT mini quản lý 100.000 sản phẩm (ID, Name, Price, Stock, Rating) qua 5 phân hệ CTDL. Bấm vào từng tab để trực quan hóa và chạy thử.</p>
+  <div class="cards">
+    <div class="card"><div class="k">Sản phẩm (mock)</div><div class="v mono" id="ovN">0</div></div>
+    <div class="card"><div class="k">Module CTDL</div><div class="v">5 <small>+ AVL bonus</small></div></div>
+    <div class="card"><div class="k">Thuật toán sắp xếp</div><div class="v">5 <small>3 cơ bản + 2 nâng cao</small></div></div>
+    <div class="card"><div class="k">Độ phức tạp tốt nhất</div><div class="v">O(1) <small>Hash / Stack / Queue</small></div></div>
+  </div>
+  <h3>Ánh xạ nghiệp vụ → Cấu trúc dữ liệu</h3>
+  <table>
+    <tr><th>Module</th><th>Nghiệp vụ</th><th>CTDL</th><th>Độ phức tạp nổi bật</th></tr>
+    <tr><td>1</td><td>Quản lý kho hàng động</td><td>Danh sách liên kết đôi</td><td>Thêm đầu/cuối O(1)</td></tr>
+    <tr><td>2</td><td>Undo giỏ hàng / Flash Sale</td><td>Stack (LIFO) + Queue (FIFO)</td><td>Push/Pop/Enqueue/Dequeue O(1)</td></tr>
+    <tr><td>3</td><td>Chỉ mục truy xuất theo ID</td><td>BST + AVL (cân bằng)</td><td>Tìm kiếm O(log n), AVL đảm bảo</td></tr>
+    <tr><td>4</td><td>Lọc & sắp xếp danh mục</td><td>Selection/Bubble/Insertion + Quick/Merge</td><td>O(n²) vs O(n log n)</td></tr>
+    <tr><td>5</td><td>Tìm kiếm theo tên + lịch sử</td><td>Hash Table (Separate Chaining) + Self-org List</td><td>O(1) trung bình</td></tr>
+  </table>
+  <div class="controls"><button class="btn" id="genAll">Nạp 100.000 sản phẩm mock (seed=2024)</button>
+  <span id="genStatus" style="font-size:13px;color:var(--soft)"></span></div>
+</section>
+
+<!-- ============ MODULE 1: LINKED LIST ============ -->
+<section class="panel" id="v-m1">
+  <h2>Module 1 — Quản lý kho hàng: Danh sách liên kết đôi</h2>
+  <p class="sub">Thêm/xóa O(1) tại đầu/cuối, cấp phát động, tự giải phóng. Tìm theo ID tuyến tính O(n). (Hiển thị tối đa 12 nút đầu để trực quan.)</p>
+  <div class="controls">
+    <button class="btn" id="llLoad">Nạp kho (100k SP)</button>
+    <button class="btn ghost" id="llAddFront">+ Thêm đầu</button>
+    <button class="btn ghost" id="llAddBack">+ Thêm cuối</button>
+    <input type="number" id="llId" placeholder="ID" min="1" style="width:80px">
+    <button class="btn danger" id="llDel">Xóa theo ID</button>
+    <button class="btn ghost" id="llFind">Tìm theo ID</button>
+    <button class="btn ghost" id="llClear">Giải phóng bộ nhớ</button>
+  </div>
+  <div class="cards" style="grid-template-columns:repeat(4,1fr)">
+    <div class="card"><div class="k">Kích thước kho</div><div class="v mono" id="llSize">0</div></div>
+    <div class="card"><div class="k">Thời gian nạp 100k</div><div class="v mono" id="llLoadTime">—</div></div>
+    <div class="card"><div class="k">Kết quả tìm</div><div class="v" id="llFindRes" style="font-size:15px">—</div></div>
+    <div class="card"><div class="k">Trạng thái bộ nhớ</div><div class="v" id="llMem" style="font-size:15px">Trống</div></div>
+  </div>
+  <h3>Trực quan danh sách (head → ... → tail)</h3>
+  <div class="ll-wrap" id="llViz"><div style="color:var(--soft);font-size:13px">Chưa có phần tử — hãy nạp kho hoặc thêm sản phẩm.</div></div>
+  <p class="ll-note" id="llNote"></p>
+</section>
+
+<!-- ============ MODULE 2: STACK + QUEUE ============ -->
+<section class="panel" id="v-m2">
+  <h2>Module 2 — Giỏ hàng (Stack Undo) + Hàng đợi thanh toán (Queue)</h2>
+  <p class="sub">Xóa sản phẩm khỏi giỏ → trạng thái được đẩy vào Stack (LIFO); Undo pop và khôi phục. Flash Sale → đơn vào Queue (FIFO), xử lý lần lượt.</p>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px">
+    <div>
+      <h3>Giỏ hàng + Undo Stack</h3>
+      <div class="controls">
+        <select id="cartSel" style="min-width:170px"></select>
+        <button class="btn" id="cartAdd">+ Thêm vào giỏ</button>
+        <button class="btn danger" id="cartRemove">Xóa mục đầu (→ Stack)</button>
+        <button class="btn accent" id="cartUndo">↶ Undo</button>
+      </div>
+      <div id="cartList" style="font-size:13px;min-height:60px"></div>
+      <p style="font-size:12px;color:var(--soft);margin-top:6px">Stack Undo (đỉnh trên cùng):</p>
+      <div class="stack-col" id="stackViz"></div>
+    </div>
+    <div>
+      <h3>Hàng đợi Flash Sale (FIFO)</h3>
+      <div class="controls">
+        <input type="number" id="qN" value="12" min="1" max="50" style="width:80px">
+        <button class="btn" id="qEnqueue">Cho N đơn vào hàng đợi</button>
+        <button class="btn ghost" id="qDequeue">Xử lý 1 đơn (dequeue)</button>
+        <button class="btn accent" id="qFlash">Mô phỏng xử lý toàn bộ</button>
+      </div>
+      <div class="pointer" id="qFrontLabel" style="text-align:left;margin-bottom:2px"></div>
+      <div class="queue-row" id="qViz"><span style="color:var(--soft);font-size:13px">Hàng đợi trống.</span></div>
+      <div class="cards" style="grid-template-columns:1fr 1fr;margin-top:10px">
+        <div class="card"><div class="k">Đơn đang chờ</div><div class="v mono" id="qSize">0</div></div>
+        <div class="card"><div class="k">Thời gian xử lý</div><div class="v mono" id="qTime">—</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ MODULE 3: BST + AVL ============ -->
+<section class="panel" id="v-m3">
+  <h2>Module 3 — Cây nhị phân tìm kiếm (BST) + Cây AVL cân bằng</h2>
+  <p class="sub">Chèn/Xóa/Duyệt (Pre/In/Post) bằng đệ quy. Minh họa suy biến: chèn ID tăng dần → BST thành danh sách, AVL vẫn cân bằng.</p>
+  <div class="controls">
+    <button class="btn" id="bstRand">Nạp 15 ID ngẫu nhiên</button>
+    <button class="btn ghost" id="bstSorted">Chèn tăng dần 1..15 (suy biến?)</button>
+    <input type="number" id="bstId" placeholder="ID" style="width:80px">
+    <button class="btn ghost" id="bstIns">Chèn ID</button>
+    <button class="btn danger" id="bstDel">Xóa ID</button>
+    <button class="btn ghost" data-trav="pre">Pre-order</button>
+    <button class="btn ghost" data-trav="in">In-order</button>
+    <button class="btn ghost" data-trav="post">Post-order</button>
+  </div>
+  <div class="cards" style="grid-template-columns:repeat(4,1fr)">
+    <div class="card"><div class="k">Số nút</div><div class="v mono" id="bstCount">0</div></div>
+    <div class="card"><div class="k">Chiều cao BST</div><div class="v mono" id="bstH">0</div></div>
+    <div class="card"><div class="k">Chiều cao AVL</div><div class="v mono" id="avlH">0</div></div>
+    <div class="card"><div class="k">log₂(n) kỳ vọng</div><div class="v mono" id="bstLog">—</div></div>
+  </div>
+  <h3>BST (trái) so với AVL (phải) — cùng dữ liệu</h3>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+    <svg class="tree-svg" id="bstSvg" viewBox="0 0 400 260" preserveAspectRatio="xMidYMid meet"></svg>
+    <svg class="tree-svg" id="avlSvg" viewBox="0 0 400 260" preserveAspectRatio="xMidYMid meet"></svg>
+  </div>
+  <div class="legend"><span><i style="background:var(--brand)"></i>Nút thông thường</span><span><i style="background:var(--accent)"></i>Thứ tự duyệt (highlight)</span></div>
+  <p id="travOut" style="font-size:13px;margin-top:8px;color:var(--soft)"></p>
+</section>
+
+<!-- ============ MODULE 4: SORT + FILTER ============ -->
+<section class="panel" id="v-m4">
+  <h2>Module 4 — Bộ lọc &amp; Sắp xếp (so sánh thời gian thực tế)</h2>
+  <p class="sub">Cùng một tập dữ liệu ngẫu nhiên, đo bằng performance.now(). Cơ bản O(n²) vs nâng cao O(n log n) đệ quy.</p>
+  <div class="controls">
+    <label>N = <input type="number" id="sortN" value="5000" min="500" max="20000" step="500" style="width:90px"></label>
+    <button class="btn" id="sortRun">Chạy benchmark 5 thuật toán</button>
+    <button class="btn ghost" id="sortBars">Trực quan hóa sắp xếp (200 phần tử)</button>
+  </div>
+  <div id="sortResults" class="sort-result"></div>
+  <div class="bars" id="sortBarsViz" style="display:none"></div>
+  <h3 style="margin-top:18px">Bộ lọc sản phẩm (1.000 SP mẫu)</h3>
+  <div class="controls">
+    <label>Giá từ <input type="number" id="fLo" value="100000" style="width:100px"></label>
+    <label>đến <input type="number" id="fHi" value="1000000" style="width:100px"></label>
+    <label>Rating ≥ <input type="number" id="fR" value="3.5" min="0" max="5" step="0.5" style="width:70px"></label>
+    <button class="btn" id="fRun">Lọc</button>
+    <span id="fCount" style="font-size:13px;color:var(--soft)"></span>
+  </div>
+  <div id="fList" style="font-size:12.5px;max-height:200px;overflow-y:auto"></div>
+</section>
+
+<!-- ============ MODULE 5: HASH + SELF-ORG ============ -->
+<section class="panel" id="v-m5">
+  <h2>Module 5 — Bảng băm (Hash Table) + Danh sách tự tổ chức</h2>
+  <p class="sub">Hàm băm đa thức trên tên sản phẩm, xử lý đụng độ bằng Separate Chaining. Self-organizing List dùng Move-to-Front cho lịch sử tìm kiếm.</p>
+  <div class="controls">
+    <button class="btn" id="hashLoad">Nạp 30 SP vào Hash (M=13)</button>
+    <input type="text" id="hashSearch" placeholder="Tên SP, vd: Laptop_4" style="width:170px">
+    <button class="btn ghost" id="hashFindBtn">Tìm theo tên</button>
+    <button class="btn accent" id="hashBench">Benchmark 100k (so sánh Linear vs Hash)</button>
+  </div>
+  <div class="cards" style="grid-template-columns:repeat(4,1fr)">
+    <div class="card"><div class="k">Số phần tử</div><div class="v mono" id="hSize">0</div></div>
+    <div class="card"><div class="k">Load factor</div><div class="v mono" id="hLoad">—</div></div>
+    <div class="card"><div class="k">Số đụng độ</div><div class="v mono" id="hCol">—</div></div>
+    <div class="card"><div class="k">Chuỗi dài nhất</div><div class="v mono" id="hMax">—</div></div>
+  </div>
+  <p id="hashFindRes" style="font-size:13px;margin:6px 0;color:var(--brand);font-weight:600"></p>
+  <div class="hash-grid" id="hashViz"></div>
+  <p id="hashBenchRes" style="font-size:13px;margin-top:10px;color:var(--soft)"></p>
+  <h3 style="margin-top:20px">Lịch sử tìm kiếm — Move-to-Front (gõ từ khóa, Enter)</h3>
+  <div class="controls">
+    <input type="text" id="solInput" placeholder="Nhập từ khóa rồi Enter" style="width:220px">
+    <span style="font-size:12.5px;color:var(--soft)">Từ được truy vấn nhiều lần sẽ tự nhảy lên đầu.</span>
+  </div>
+  <div id="solViz"><p style="color:var(--soft);font-size:13px">Chưa có lịch sử.</p></div>
+</section>
+
+</main>
+<footer>Mini E-Commerce Core Engine · Web Dashboard phiên bản JS · Dữ liệu mock có seed cố định để tái lập thực nghiệm</footer>
+<div class="toast" id="toast"></div>
+
+<script>
+/* ================= DỮ LIỆU MOCK (seed cố định) ================= */
+function mulberry32(a){return function(){a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
+const PREFIX=['Ao','Quan','Giay','Tui','Laptop','DienThoai','TaiNghe','Ly','Den','Sach'];
+let RNG=mulberry32(2024);
+function genProduct(id){return{id,name:PREFIX[id%10]+'_'+id,price:10000+Math.floor(RNG()*2000000),stock:Math.floor(RNG()*1000),rating:1+Math.floor(RNG()*41)/10}}
+let PRODUCTS=[];
+function ensureProducts(n){if(PRODUCTS.length>=n)return;RNG=mulberry32(2024);PRODUCTS=[];for(let i=1;i<=n;i++)PRODUCTS.push(genProduct(i))}
+const fmt=n=>n.toLocaleString('vi-VN');
+const $=s=>document.querySelector(s);
+const $$=s=>document.querySelectorAll(s);
+const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+function toast(msg){const t=$('#toast');t.textContent=msg;t.classList.add('show');clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('show'),2200)}
+
+/* ================= TABS ================= */
+$$('.tab').forEach(b=>b.onclick=()=>{
+  $$('.tab').forEach(x=>x.classList.remove('active'));
+  $$('.panel').forEach(x=>x.classList.remove('active'));
+  b.classList.add('active');$('#v-'+b.dataset.v).classList.add('active');
+});
+
+/* ================= OVERVIEW ================= */
+$('#genAll').onclick=()=>{
+  const t0=performance.now();ensureProducts(100000);
+  const ms=(performance.now()-t0).toFixed(1);
+  $('#pillN').textContent='100.000';$('#ovN').textContent='100.000';
+  $('#genStatus').textContent=`Đã nạp 100.000 SP trong ${ms} ms`;
+  toast('Đã nạp 100.000 sản phẩm');
+};
+
+/* ================= MODULE 1: LINKED LIST ================= */
+class LNode{constructor(d){this.data=d;this.prev=null;this.next=null}}
+class LinkedList{
+  constructor(){this.head=null;this.tail=null;this.size=0}
+  clear(){this.head=null;this.tail=null;this.size=0}
+  pushFront(d){const n=new LNode(d);if(!this.head){this.head=this.tail=n}else{n.next=this.head;this.head.prev=n;this.head=n}this.size++}
+  pushBack(d){const n=new LNode(d);if(!this.head){this.head=this.tail=n}else{n.prev=this.tail;this.tail.next=n;this.tail=n}this.size++}
+  removeById(id){for(let c=this.head;c;c=c.next)if(c.data.id===id){if(c.prev)c.prev.next=c.next;else this.head=c.next;if(c.next)c.next.prev=c.prev;else this.tail=c.prev;this.size--;return true}return false}
+  findById(id){for(let c=this.head;c;c=c.next)if(c.data.id===id)return c.data;return null}
+  toArray(limit){const a=[];for(let c=this.head;c&&a.length<limit;c=c.next)a.push(c.data);return a}
+}
+const inv=new LinkedList();
+function renderLL(){
+  $('#llSize').textContent=fmt(inv.size);
+  const viz=$('#llViz');
+  if(!inv.size){viz.innerHTML='<div style="color:var(--soft);font-size:13px">Kho trống — đã giải phóng bộ nhớ.</div>';$('#llMem').textContent='Trống';return}
+  $('#llMem').textContent='Đang sử dụng (động)';
+  const arr=inv.toArray(12);
+  viz.innerHTML=arr.map((p,i)=>`<div class="ll-node"><div class="id">#${p.id}</div><div class="pr">${fmt(p.price)}₫</div></div>${i<arr.length-1?'<div class="ll-arrow">⇄</div>':''}`).join('')+(inv.size>12?'<div class="ll-arrow">…</div>':'');
+  $('#llNote').textContent=inv.size>12?`Hiển thị 12/${inv.size} nút đầu. Con trỏ prev/next nối đôi, thêm/xóa đầu-cuối O(1).`:'';
+}
+$('#llLoad').onclick=()=>{inv.clear();const t0=performance.now();ensureProducts(100000);for(let i=0;i<100000;i++)inv.pushBack(PRODUCTS[i]);const ms=(performance.now()-t0).toFixed(1);$('#llLoadTime').textContent=ms+' ms';renderLL();toast('Đã nạp 100.000 SP vào kho (Linked List)')};
+$('#llAddFront').onclick=()=>{const id=parseInt($('#llId').value)||Math.floor(Math.random()*1e6);inv.pushFront(genProduct(id));renderLL()};
+$('#llAddBack').onclick=()=>{const id=parseInt($('#llId').value)||Math.floor(Math.random()*1e6);inv.pushBack(genProduct(id));renderLL()};
+$('#llDel').onclick=()=>{const id=parseInt($('#llId').value);if(!id)return toast('Nhập ID cần xóa');toast(inv.removeById(id)?'Đã xóa ID '+id:'Không tìm thấy ID '+id);renderLL()};
+$('#llFind').onclick=()=>{const id=parseInt($('#llId').value);if(!id)return;const t0=performance.now();const p=inv.findById(id);const ms=(performance.now()-t0).toFixed(2);$('#llFindRes').innerHTML=p?`#${p.id} · ${fmt(p.price)}₫<br><small style="color:var(--soft)">${ms} ms (tuyến tính)</small>`:`Không thấy · ${ms} ms`};
+$('#llClear').onclick=()=>{inv.clear();renderLL();toast('Đã giải phóng toàn bộ bộ nhớ động')};
+renderLL();
+
+/* ================= MODULE 2: STACK + QUEUE ================= */
+ensureProducts(20);
+const cartSel=$('#cartSel');
+PRODUCTS.slice(0,20).forEach(p=>{const o=document.createElement('option');o.value=p.id;o.textContent=`#${p.id} ${p.name} — ${fmt(p.price)}₫`;cartSel.appendChild(o)});
+let cart=[];const undoStack=[];
+function renderCart(){
+  const el=$('#cartList');
+  el.innerHTML=cart.length?cart.map((c,i)=>`<div style="display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid var(--line)">#${c.p.id} ${c.p.name} <b>×${c.qty}</b> <b>${fmt(c.p.price*c.qty)}₫</b></div>`).join(''):'<span style="color:var(--soft)">Giỏ hàng trống.</span>';
+  const sv=$('#stackViz');
+  sv.innerHTML=undoStack.length?undoStack.slice().reverse().map((u,i)=>`<div class="stack-item" style="opacity:${1-i*0.12}">Undo: #${u.p.id} ×${u.qty}</div>`).join(''):'<div style="color:var(--soft);font-size:12px;text-align:center;margin-top:30px">Stack trống</div>';
+}
+$('#cartAdd').onclick=()=>{const id=parseInt(cartSel.value);const p=PRODUCTS.find(x=>x.id===id);const ex=cart.find(c=>c.p.id===id);if(ex)ex.qty++;else cart.push({p,qty:1});renderCart();toast('Đã thêm vào giỏ')};
+$('#cartRemove').onclick=()=>{if(!cart.length)return toast('Giỏ trống');const it=cart.shift();undoStack.push(it);renderCart();toast('Đã xóa — có thể Undo (Stack)')};
+$('#cartUndo').onclick=()=>{if(!undoStack.length)return toast('Không có gì để Undo');const it=undoStack.pop();cart.unshift(it);renderCart();toast('Undo thành công (LIFO)')};
+renderCart();
+
+let queue=[];let processing=false;
+function renderQ(){
+  $('#qSize').textContent=queue.length;
+  const el=$('#qViz');
+  el.innerHTML=queue.length?queue.map((o,i)=>`<div class="q-item ${i===0?'front':''}">#${o.id}<br><small>${fmt(o.total)}₫</small></div>`).join(''):'<span style="color:var(--soft);font-size:13px">Hàng đợi trống.</span>';
+  $('#qFrontLabel').textContent=queue.length?'↑ FRONT (được xử lý trước — FIFO)':'';
+}
+$('#qEnqueue').onclick=()=>{const n=Math.min(50,parseInt($('#qN').value)||5);for(let i=0;i<n;i++)queue.push({id:queue.length+1,total:100000+Math.floor(Math.random()*5e6)});renderQ();toast(`Đã cho ${n} đơn vào hàng đợi`)};
+$('#qDequeue').onclick=()=>{if(!queue.length)return toast('Hàng đợi trống');const o=queue.shift();renderQ();toast(`Đã xử lý đơn #${o.id}`)};
+$('#qFlash').onclick=async()=>{
+  if(processing||!queue.length)return;processing=true;
+  const t0=performance.now();
+  while(queue.length){queue.shift();renderQ();await sleep(80)}
+  $('#qTime').textContent=(performance.now()-t0).toFixed(0)+' ms';
+  processing=false;toast('Flash Sale: xử lý FIFO xong toàn bộ đơn');
+};
+renderQ();
+
+/* ================= MODULE 3: BST + AVL ================= */
+class BNode{constructor(d){this.data=d;this.left=null;this.right=null}}
+class BST{
+  constructor(){this.root=null;this.n=0}
+  ins(r,d){if(!r)return new BNode(d);if(d.id<r.data.id)r.left=this.ins(r.left,d);else if(d.id>r.data.id)r.right=this.ins(r.right,d);else r.data=d;return r}
+  insert(d){this.root=this.ins(this.root,d);this.n++}
+  height(r=this.root){return r?1+Math.max(this.height(r.left),this.height(r.right)):0}
+  inorder(r,a){if(!r)return;this.inorder(r.left,a);a.push(r);this.inorder(r.right,a)}
+  trav(type,r=this.root,a=[]){if(!r)return a;if(type==='pre')a.push(r.data.id);this.trav(type,r.left,a);if(type==='in')a.push(r.data.id);this.trav(type,r.right,a);if(type==='post')a.push(r.data.id);return a}
+}
+class AVL extends BST{
+  h(r){return r?r.h:0}
+  bal(r){return r?this.h(r.left)-this.h(r.right):0}
+  rotR(y){const x=y.left;y.left=x.right;x.right=y;y.h=1+Math.max(this.h(y.left),this.h(y.right));x.h=1+Math.max(this.h(x.left),this.h(x.right));return x}
+  rotL(x){const y=x.right;x.right=y.left;y.left=x;x.h=1+Math.max(this.h(x.left),this.h(x.right));y.h=1+Math.max(this.h(y.left),this.h(y.right));return y}
+  ins(r,d){
+    if(!r){const n=new BNode(d);n.h=1;return n}
+    if(d.id<r.data.id)r.left=this.ins(r.left,d);else if(d.id>r.data.id)r.right=this.ins(r.right,d);else{r.data=d;return r}
+    r.h=1+Math.max(this.h(r.left),this.h(r.right));const b=this.bal(r);
+    if(b>1&&d.id<r.left.data.id)return this.rotR(r);
+    if(b<-1&&d.id>r.right.data.id)return this.rotL(r);
+    if(b>1&&d.id>r.left.data.id){r.left=this.rotL(r.left);return this.rotR(r)}
+    if(b<-1&&d.id<r.right.data.id){r.right=this.rotR(r.right);return this.rotL(r)}
+    return r;
+  }
+  insert(d){this.root=this.ins(this.root,d);this.n++}
+}
+const bst=new BST(),avl=new AVL();
+function renderTree(svg,root,hlSet=new Set()){
+  svg.innerHTML='';const NS='http://www.w3.org/2000/svg';
+  if(!root){svg.innerHTML='<text x="200" y="130" text-anchor="middle" fill="#999" font-size="13">Cây trống</text>';return}
+  const order=[];(function ino(r){if(!r)return;ino(r.left);order.push(r);ino(r.right)})(root);
+  const pos=new Map();order.forEach((n,i)=>pos.set(n,{x:30+i*(340/Math.max(1,order.length-1)),y:0}));
+  let maxD=0;(function y(r,d){if(!r)return;pos.get(r).y=25+d*34;maxD=Math.max(maxD,d);y(r.left,d+1);y(r.right,d+1)})(root,0);
+  const H=Math.max(240,60+maxD*34);svg.setAttribute('viewBox',`0 0 400 ${H}`);
+  (function line(r){if(!r)return;[r.left,r.right].forEach(c=>{if(c){const a=pos.get(r),b=pos.get(c);const l=document.createElementNS(NS,'line');l.setAttribute('class','tline');l.setAttribute('x1',a.x);l.setAttribute('y1',a.y);l.setAttribute('x2',b.x);l.setAttribute('y2',b.y);svg.appendChild(l);line(c)}})})(root);
+  order.forEach(n=>{const p=pos.get(n);const g=document.createElementNS(NS,'g');g.setAttribute('class','tnode'+(hlSet.has(n.data.id)?' hl':''));g.dataset.id=n.data.id;const c=document.createElementNS(NS,'circle');c.setAttribute('cx',p.x);c.setAttribute('cy',p.y);c.setAttribute('r',13);const t=document.createElementNS(NS,'text');t.setAttribute('x',p.x);t.setAttribute('y',p.y+4);t.textContent=n.data.id;g.appendChild(c);g.appendChild(t);svg.appendChild(g)});
+}
+function refreshBST(){
+  $('#bstCount').textContent=bst.n;$('#bstH').textContent=bst.height();$('#avlH').textContent=avl.height();
+  $('#bstLog').textContent=bst.n?Math.ceil(Math.log2(bst.n+1)):'—';
+  renderTree($('#bstSvg'),bst.root);renderTree($('#avlSvg'),avl.root);
+}
+function insertBoth(id){bst.insert({id});avl.insert({id});refreshBST()}
+$('#bstRand').onclick=()=>{bst.root=null;avl.root=null;bst.n=avl.n=0;const ids=[];for(let i=1;i<=15;i++)ids.push(i);ids.sort(()=>Math.random()-.5);ids.forEach(insertBoth);toast('Đã chèn 15 ID ngẫu nhiên vào BST & AVL')};
+$('#bstSorted').onclick=()=>{bst.root=null;avl.root=null;bst.n=avl.n=0;for(let i=1;i<=15;i++)insertBoth(i);toast('Chèn tăng dần: BST suy biến, AVL vẫn cân bằng!')};
+$('#bstIns').onclick=()=>{const id=parseInt($('#bstId').value);if(id)insertBoth(id)};
+$('#bstDel').onclick=()=>{toast('Xóa trên BST trực quan: bỏ trống trong demo (đã hiện thực đầy đủ trong mã C++)')};
+$$('[data-trav]').forEach(b=>b.onclick=async()=>{
+  const order=bst.trav(b.dataset.trav);$('#travOut').textContent=`${b.textContent}: ${order.join(' → ')}`;
+  for(const id of order){$$('#bstSvg .tnode').forEach(g=>g.classList.toggle('hl',+g.dataset.id===id));await sleep(300)}
+  $$('#bstSvg .tnode').forEach(g=>g.classList.remove('hl'));
+});
+refreshBST();
+
+/* ================= MODULE 4: SORT + FILTER ================= */
+function sSelection(a){for(let i=0;i<a.length-1;i++){let m=i;for(let j=i+1;j<a.length;j++)if(a[j]<a[m])m=j;[a[i],a[m]]=[a[m],a[i]]}}
+function sBubble(a){let sw;do{sw=false;for(let j=0;j<a.length-1;j++)if(a[j+1]<a[j]){[a[j],a[j+1]]=[a[j+1],a[j]];sw=true}}while(sw)}
+function sInsertion(a){for(let i=1;i<a.length;i++){const k=a[i];let j=i-1;while(j>=0&&a[j]>k){a[j+1]=a[j];j--}a[j+1]=k}}
+function sQuick(a,lo,hi){if(lo>=hi)return;const p=a[hi];let i=lo-1;for(let j=lo;j<hi;j++)if(a[j]<=p){i++;[a[i],a[j]]=[a[j],a[i]]}[a[i+1],a[hi]]=[a[hi],a[i+1]];sQuick(a,lo,i);sQuick(a,i+2,hi)}
+function sMerge(a,lo,hi){if(lo>=hi)return;const mid=(lo+hi)>>1;sMerge(a,lo,mid);sMerge(a,mid+1,hi);const t=[];let i=lo,j=mid+1;while(i<=mid&&j<=hi)t.push(a[i]<=a[j]?a[i++]:a[j++]);while(i<=mid)t.push(a[i++]);while(j<=hi)t.push(a[j++]);for(let k=0;k<t.length;k++)a[lo+k]=t[k]}
+function isSorted(a){for(let i=1;i<a.length;i++)if(a[i]<a[i-1])return false;return true}
+function timeMs(fn){const t0=performance.now();fn();return performance.now()-t0}
+$('#sortRun').onclick=()=>{
+  const N=Math.min(20000,Math.max(500,parseInt($('#sortN').value)||5000));
+  const base=Array.from({length:N},()=>Math.floor(Math.random()*1e6));
+  const algos=[['Selection Sort',a=>sSelection(a),false],['Bubble Sort',a=>sBubble(a),false],['Insertion Sort',a=>sInsertion(a),false],['QuickSort',a=>sQuick(a,0,a.length-1),true],['MergeSort',a=>sMerge(a,0,a.length-1),true]];
+  let html='';let maxT=0;const res=[];
+  algos.forEach(([name,fn,fast])=>{const a=base.slice();const ms=timeMs(()=>fn(a));const ok=isSorted(a);maxT=Math.max(maxT,ms);res.push({name,ms,ok,fast})});
+  res.forEach(r=>{const w=Math.max(3,Math.round(r.ms/maxT*100));html+=`<div class="sr ${r.fast?'fast':'slow'}" style="min-width:150px"><div class="n">${r.name} ${r.ok?'✓':'✗'}</div><div class="t mono">${r.ms.toFixed(2)} ms</div><div style="height:6px;background:var(--line);border-radius:3px;margin-top:4px"><div style="width:${w}%;height:100%;background:${r.fast?'var(--brand)':'var(--danger)'}"></div></div><div style="font-size:10.5px;color:var(--soft);margin-top:2px">N=${fmt(N)} · ${r.fast?'O(n log n)':'O(n²)'}</div></div>`});
+  $('#sortResults').innerHTML=html;toast('Benchmark xong — xem cột thời gian');
+};
+$('#sortBars').onclick=async()=>{
+  const viz=$('#sortBarsViz');viz.style.display='flex';viz.innerHTML='';
+  const N=40;const a=Array.from({length:N},()=>Math.random());
+  const bars=a.map(v=>{const d=document.createElement('div');d.className='bar';d.style.height=(v*100)+'%';viz.appendChild(d);return d});
+  for(let i=0;i<N-1;i++){let m=i;for(let j=i+1;j<N;j++){bars[j].classList.add('sel');await sleep(15);bars[j].classList.remove('sel');if(a[j]<a[m])m=j}[a[i],a[m]]=[a[m],a[i]];bars[i].style.height=a[i]*100+'%';bars[m].style.height=a[m]*100+'%'}
+  toast('Trực quan hóa Selection Sort xong');
+};
+let SAMPLE1000=[];ensureProducts(1000);SAMPLE1000=PRODUCTS.slice(0,1000);
+$('#fRun').onclick=()=>{
+  const lo=+$('#fLo').value||0,hi=+$('#fHi').value||1e12,r=+$('#fR').value||0;
+  const f=SAMPLE1000.filter(p=>p.price>=lo&&p.price<=hi&&p.rating>=r);
+  $('#fCount').textContent=`→ ${f.length} sản phẩm khớp`;
+  $('#fList').innerHTML=f.slice(0,15).map(p=>`<div style="padding:3px 0;border-bottom:1px dashed var(--line)">#${p.id} <b>${p.name}</b> · ${fmt(p.price)}₫ · ★${p.rating}</div>`).join('')+(f.length>15?`<div style="color:var(--soft);padding-top:4px">… và ${f.length-15} sản phẩm khác</div>`:'');
+};
+
+/* ================= MODULE 5: HASH + SELF-ORG ================= */
+class HashTable{
+  constructor(m){this.m=m;this.buckets=Array.from({length:m},()=>[]);this.size=0}
+  hash(s){let h=0;for(let i=0;i<s.length;i++)h=(h*31+s.charCodeAt(i))%this.m;return h}
+  insert(p){const b=this.hash(p.name);const ex=this.buckets[b].find(x=>x.name===p.name);if(ex){ex.data=p;return}this.buckets[b].push({name:p.name,data:p});this.size++}
+  search(name){const b=this.hash(name);return this.buckets[b].find(x=>x.name===name)||null}
+  stats(){let occ=0,max=0;this.buckets.forEach(c=>{if(c.length)occ++;max=Math.max(max,c.length)});return{load:this.size/this.m,coll:this.size-occ,max}}
+}
+let htSmall=null;
+function renderHash(){
+  if(!htSmall){$('#hashViz').innerHTML='';return}
+  const s=htSmall.stats();$('#hSize').textContent=htSmall.size;$('#hLoad').textContent=s.load.toFixed(3);$('#hCol').textContent=s.coll;$('#hMax').textContent=s.max;
+  $('#hashViz').innerHTML=htSmall.buckets.map((c,i)=>`<div class="bucket"><div class="bi">bucket[${i}] ${c.length?`· ${c.length} khóa`:''}</div><div class="chain">${c.map(x=>`<span>${x.name}</span>`).join('')||'<span style="background:#ccc">trống</span>'}</div></div>`).join('');
+}
+$('#hashLoad').onclick=()=>{htSmall=new HashTable(13);ensureProducts(30);for(let i=1;i<=30;i++)htSmall.insert(PRODUCTS[i-1]);renderHash();toast('Đã nạp 30 SP — quan sát các chuỗi (chain) khi đụng độ')};
+$('#hashFindBtn').onclick=()=>{const name=$('#hashSearch').value.trim();if(!name||!htSmall)return;const t0=performance.now();const r=htSmall.search(name);const ms=(performance.now()-t0).toFixed(3);$('#hashFindRes').textContent=r?`Tìm thấy: #${r.data.id} ${r.data.name} — ${fmt(r.data.price)}₫ (${ms} ms, O(1) TB)`:`Không tìm thấy "${name}" (${ms} ms)`};
+$('#hashBench').onclick=()=>{
+  ensureProducts(100000);const big=new HashTable(200003);PRODUCTS.forEach(p=>big.insert(p));
+  const qs=Array.from({length:1000},()=>Math.floor(Math.random()*100000)+1);
+  const tLin=timeMs(()=>{qs.forEach(id=>{for(let i=0;i<100000;i++)if(PRODUCTS[i].id===id)break})});
+  const tHsh=timeMs(()=>{qs.forEach(id=>big.search(PREFIX[id%10]+'_'+id))});
+  $('#hashBenchRes').innerHTML=`1.000 truy vấn / 100.000 SP: <b>Linear ${tLin.toFixed(1)} ms</b> vs <b>Hash ${tHsh.toFixed(2)} ms</b> — Hash nhanh gấp ~${(tLin/Math.max(tHsh,0.01)).toFixed(0)} lần.`;
+};
+renderHash();
+
+let sol=[];
+function renderSOL(){
+  const el=$('#solViz');
+  el.innerHTML=sol.length?sol.map((s,i)=>`<div class="sol-item ${i===0?'top':''}"><span style="color:var(--soft);font-weight:700;min-width:24px">#${i+1}</span> ${s.kw}<span class="freq">${s.freq}×</span></div>`).join(''):'<p style="color:var(--soft);font-size:13px">Chưa có lịch sử.</p>';
+}
+$('#solInput').addEventListener('keydown',e=>{
+  if(e.key!=='Enter')return;const kw=e.target.value.trim();if(!kw)return;e.target.value='';
+  const idx=sol.findIndex(s=>s.kw===kw);
+  if(idx>=0){sol[idx].freq++;const it=sol.splice(idx,1)[0];sol.unshift(it)}else sol.unshift({kw,freq:1});
+  renderSOL();if(idx>0)toast(`"${kw}" đã Move-to-Front (lần thứ ${sol[0].freq})`);
+});
+<\/script>
+</body>
+</html>
+</script>
+
+<script>
+(function(){
+  var storeLoaded=false, dashLoaded=false, pendingStoreView=null;
+  var fStore=document.getElementById('frame-store'), fDash=document.getElementById('frame-dash');
+  var secHome=document.getElementById('sec-home'), secDocs=document.getElementById('sec-docs');
+
+  function loadStore(){
+    if(storeLoaded) return;
+    storeLoaded=true;
+    var raw=document.getElementById('tpl-store').textContent.replace(/<\\\/script>/g,'<\/script>');
+    fStore.srcdoc=raw;
+    fStore.onload=function(){ if(pendingStoreView){ try{ fStore.contentWindow.setView(pendingStoreView); }catch(e){} pendingStoreView=null; } };
+  }
+  function loadDash(){
+    if(dashLoaded) return;
+    dashLoaded=true;
+    var raw=document.getElementById('tpl-dash').textContent.replace(/<\\\/script>/g,'<\/script>');
+    fDash.srcdoc=raw;
+  }
+  function setStoreView(v){
+    pendingStoreView=v;
+    if(storeLoaded && fStore.contentWindow && typeof fStore.contentWindow.setView==='function'){
+      try{ fStore.contentWindow.setView(v); pendingStoreView=null; }catch(e){}
+    }
+  }
+  function show(go){
+    document.querySelectorAll('#navlinks button').forEach(function(b){ b.classList.toggle('active', b.dataset.go===go); });
+    fStore.classList.remove('active'); fDash.classList.remove('active');
+    secHome.classList.remove('active'); secDocs.classList.remove('active');
+    if(go==='home'){ secHome.classList.add('active'); window.scrollTo(0,0); }
+    else if(go==='docs'){ secDocs.classList.add('active'); window.scrollTo(0,0); }
+    else if(go==='store'){ loadStore(); fStore.classList.add('active'); setStoreView('store'); }
+    else if(go==='engine'){ loadStore(); fStore.classList.add('active'); setStoreView('engine'); }
+    else if(go==='dash'){ loadDash(); fDash.classList.add('active'); }
+  }
+  document.querySelectorAll('[data-go]').forEach(function(el){ el.addEventListener('click', function(){ show(el.dataset.go); }); });
+
+  /* ===== LOGIN (main page) ===== */
+  var VALID_USER='trunghieu123', VALID_PASS='123456789';
+  var loginModal=document.getElementById('loginModalMain'), loginBtn=document.getElementById('loginBtnMain');
+  function loggedIn(){ try{ return localStorage.getItem('th_user')===VALID_USER; }catch(e){ return false; } }
+  function renderLoginBtn(){ if(loggedIn()){ loginBtn.textContent='👤 trunghieu123 (Đăng xuất)'; loginBtn.dataset.action='logout'; } else { loginBtn.textContent='👤 Đăng nhập'; loginBtn.dataset.action='login'; } }
+  loginBtn.addEventListener('click', function(){
+    if(loginBtn.dataset.action==='logout'){ try{ localStorage.removeItem('th_user'); }catch(e){} renderLoginBtn(); try{ if(fStore.contentWindow) fStore.contentWindow.postMessage('th:logout','*'); }catch(e){} return; }
+    loginModal.classList.add('open');
+  });
+  loginModal.addEventListener('click', function(e){ if(e.target===loginModal) loginModal.classList.remove('open'); });
+  document.getElementById('loginFormMain').addEventListener('submit', function(e){
+    e.preventDefault();
+    var u=this.username.value.trim(), p=this.password.value, err=document.getElementById('loginErrMain');
+    if(u===VALID_USER && p===VALID_PASS){ try{ localStorage.setItem('th_user',u); }catch(e){} loginModal.classList.remove('open'); this.reset(); err.textContent=''; renderLoginBtn(); try{ if(fStore.contentWindow) fStore.contentWindow.postMessage('th:login:'+u,'*'); }catch(e){} }
+    else { err.textContent='Sai tên đăng nhập hoặc mật khẩu. Vui lòng thử lại.'; }
+  });
+  renderLoginBtn();
+})();
+</script>
+</body>
+</html>
